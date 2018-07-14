@@ -1,0 +1,76 @@
+﻿
+@{
+    ViewData["Title"] = "Theatres";
+}
+
+<h2>Theatres</h2>
+
+<div id="app">
+    <!-- Quiz title -->
+    <h1>{{ quiz.title }}</h1>
+    <!-- Questions: display a div for each question -->
+    <div v-for="question in quiz.questions">
+        <h2>{{ question.text }}</h2>
+        <!-- Responses: display a li for each possible response with a radio button -->
+        <ol>
+            <li v-for="response in question.responses">
+                <label>
+                    <!-- The radio button has three new directives -->
+                    <!-- v-bind:value sets "value" to "true" if the response is correct -->
+                    <!-- v-bind:name sets "name" to question index to group answers by question -->
+                    <!-- v-model creates binding with userResponses -->
+                    <input name="theatrequestions" type="radio" v-on:click="submitAnswer(response.correct)">{{response.text}}
+                </label>
+            </li>
+        </ol>
+    </div>
+    <div>
+        <p>You got {{correctAnswers}} correct!</p>
+    </div>
+</div>
+
+
+<script src="https://unpkg.com/vue"></script>
+<script>
+    // Create a quiz object with a title and two questions.
+    // A question has one or more answer, and one or more is valid.
+    var quiz = {
+        title: 'Theatres Quiz',
+        questions: [
+            {
+                text: "Which of the following theatres is the oldest operating theatre on Broadway?",
+                responses: [
+                    { text: 'The Lyceum Theatre', correct: true },
+                    { text: 'The Gershwin Theatre', correct: false },
+                    { text: 'St. James Theatre', correct: false },
+                    { text: 'Brooks Atkinson Theatre', correct: false },
+                ]
+            }, {
+                text: "Question 2",
+                responses: [
+                    { text: 'Right answer', correct: true },
+                    { text: 'Wrong answer', correct: false },
+                ]
+            }
+        ]
+    };
+
+    new Vue({
+        el: '#app',
+        data: {
+            quiz: quiz,
+            correctAnswers: 0
+        },
+        methods: {
+            submitAnswer: function (value) {
+                if (value) {
+                    this.correctAnswers++;
+                }
+                else {
+                    this.correctAnswers--;
+                }
+            }
+        }
+    });
+</script>
+
