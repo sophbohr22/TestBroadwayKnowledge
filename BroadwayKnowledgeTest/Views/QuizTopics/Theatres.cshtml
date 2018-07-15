@@ -9,31 +9,25 @@
     <!-- Quiz title -->
     <h1>{{ quiz.title }}</h1>
     <!-- Questions: display a div for each question -->
-    <div v-for="question in quiz.questions">
+    <div v-for="(question, index) in quiz.questions">
         <h2>{{ question.text }}</h2>
         <!-- Responses: display a li for each possible response with a radio button -->
         <ol>
             <li v-for="response in question.responses">
                 <label>
-                    <!-- The radio button has three new directives -->
-                    <!-- v-bind:value sets "value" to "true" if the response is correct -->
-                    <!-- v-bind:name sets "name" to question index to group answers by question -->
-                    <!-- v-model creates binding with userResponses -->
-                    <input name="theatrequestions" type="radio" v-on:click="submitAnswer(response.correct)">{{response.text}}
+                    <input v-bind:name="index" type="radio" v-on:click="submitAnswer(response.correct)">{{response.text}}
                 </label>
             </li>
         </ol>
     </div>
-    <div>
-        <p>You got {{correctAnswers}} correct!</p>
+        <div>
+            <p>You got {{correctAnswers}} correct!</p>
+        </div>
     </div>
-</div>
 
 
 <script src="https://unpkg.com/vue"></script>
 <script>
-    // Create a quiz object with a title and two questions.
-    // A question has one or more answer, and one or more is valid.
     var quiz = {
         title: 'Theatres Quiz',
         questions: [
@@ -43,13 +37,16 @@
                     { text: 'The Lyceum Theatre', correct: true },
                     { text: 'The Gershwin Theatre', correct: false },
                     { text: 'St. James Theatre', correct: false },
-                    { text: 'Brooks Atkinson Theatre', correct: false },
+                    { text: 'Brooks Atkinson Theatre', correct: false }
                 ]
-            }, {
-                text: "Question 2",
+            },
+            {
+                text: "Which of these theatres is NOT a Broadway theatre (located in NYC)",
                 responses: [
-                    { text: 'Right answer', correct: true },
-                    { text: 'Wrong answer', correct: false },
+                    { text: 'The Richard Rodgers Theatre', correct: false },
+                    { text: 'The New Amsterdam Theatre', correct: false },
+                    { text: 'The Pabst Theatre', correct: true },
+                    { text: 'The Palace Theatre', correct: false}
                 ]
             }
         ]
@@ -59,7 +56,8 @@
         el: '#app',
         data: {
             quiz: quiz,
-            correctAnswers: 0
+            correctAnswers: 0,
+            questionIndex: 0
         },
         methods: {
             submitAnswer: function (value) {
