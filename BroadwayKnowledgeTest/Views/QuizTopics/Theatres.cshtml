@@ -11,10 +11,11 @@
     <!-- Questions: display a div for each question -->
     <div v-for="(question, index) in quiz.questions">
         <h2>{{ question.text }}</h2>
-        <!-- Responses: display a li for each possible response with a radio button -->
-        <p v-for="response in question.responses">
-            <button v-bind:name="index" v-on:click="submitAnswer(response.correct)">{{response.text}}</button>
-        </p>
+        <div v-for="response in question.responses">
+            <button v-bind:name="index" v-on:click="submitAnswer(response.correct)">{{ response.text }}</button>
+            <p v-bind:name="index" v-if="!response.correct">{{ question.hint }}</p>
+        </div>
+        
     </div>
     <div>
         <p>You got {{correctAnswers}} correct!</p>
@@ -29,15 +30,17 @@
         questions: [
             {
                 text: "Which of the following theatres is the oldest operating theatre on Broadway?",
+                hint: "Hint: The correct theatre has been home to [title of show], Macbeth, and most recently, The Play That Goes Wrong" ,
                 responses: [
                     { text: 'The Lyceum Theatre', correct: true },
                     { text: 'The Gershwin Theatre', correct: false },
                     { text: 'St. James Theatre', correct: false },
-                    { text: 'Brooks Atkinson Theatre', correct: false }
-                ]
+                    { text: 'Brooks Atkinson Theatre', correct: false },
+                ],
             },
             {
                 text: "Which of these theatres is NOT a Broadway theatre?",
+                hint: "Hint: The theatre above that is not a Broadway theatre is located in Milwaukee",
                 responses: [
                     { text: 'The Richard Rodgers Theatre', correct: false },
                     { text: 'The New Amsterdam Theatre', correct: false },
@@ -53,15 +56,17 @@
         data: {
             quiz: quiz,
             correctAnswers: 0,
-            questionIndex: 0
+            questionIndex: 0,
         },
         methods: {
             submitAnswer: function (value) {
                 if (value) {
                     this.correctAnswers++;
+                    this.incorrectlyChosen = false;
                 }
                 else {
                     this.correctAnswers--;
+                    this.incorrectlyChosen = true;
                 }
             }
         }
