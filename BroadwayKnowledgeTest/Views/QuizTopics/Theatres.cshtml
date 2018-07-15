@@ -12,18 +12,14 @@
     <div v-for="(question, index) in quiz.questions">
         <h2>{{ question.text }}</h2>
         <!-- Responses: display a li for each possible response with a radio button -->
-        <ol>
-            <li v-for="response in question.responses">
-                <label>
-                    <input v-bind:name="index" type="radio" v-on:click="submitAnswer(response.correct)">{{response.text}}
-                </label>
-            </li>
-        </ol>
+        <p v-for="response in question.responses">
+            <button v-bind:name="index" v-on:click="submitAnswer(response.correct)">{{response.text}}</button>
+        </p>
     </div>
-        <div>
-            <p>You got {{correctAnswers}} correct!</p>
-        </div>
+    <div>
+        <p>You got {{correctAnswers}} correct!</p>
     </div>
+</div>
 
 
 <script src="https://unpkg.com/vue"></script>
@@ -41,12 +37,12 @@
                 ]
             },
             {
-                text: "Which of these theatres is NOT a Broadway theatre (located in NYC)",
+                text: "Which of these theatres is NOT a Broadway theatre?",
                 responses: [
                     { text: 'The Richard Rodgers Theatre', correct: false },
                     { text: 'The New Amsterdam Theatre', correct: false },
                     { text: 'The Pabst Theatre', correct: true },
-                    { text: 'The Palace Theatre', correct: false}
+                    { text: 'The Palace Theatre', correct: false }
                 ]
             }
         ]
