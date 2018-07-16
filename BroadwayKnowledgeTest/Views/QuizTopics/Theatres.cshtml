@@ -12,10 +12,8 @@
     <div v-for="(question, index) in quiz.questions">
         <h2>{{ question.text }}</h2>
         <div v-for="response in question.responses">
-            <button v-bind:name="index" v-on:click="submitAnswer(response.correct)">{{ response.text }}</button>
-            <p v-bind:name="index" v-if="!response.correct">{{ question.hint }}</p>
+            <button class="responseButton" v-bind:name="index" v-on:click="submitAnswer(response.correct)">{{ response.text }}</button>
         </div>
-        
     </div>
     <div>
         <p>You got {{correctAnswers}} correct!</p>
@@ -62,12 +60,12 @@
             submitAnswer: function (value) {
                 if (value) {
                     this.correctAnswers++;
-                    this.incorrectlyChosen = false;
                 }
                 else {
                     this.correctAnswers--;
-                    this.incorrectlyChosen = true;
                 }
+                onclick = this.disabled = true;
+                document.getElementsByClassName("responseButton").disabled = true;
             }
         }
     });
