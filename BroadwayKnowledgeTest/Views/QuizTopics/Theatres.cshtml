@@ -8,17 +8,27 @@
 <div id="app">
     <!-- Quiz title -->
     <h1>{{ quiz.title }}</h1>
-    <!-- Questions: display a div for each question -->
-    <div v-for="(question, index) in quiz.questions">
-        <h2>{{ question.text }}</h2>
-        <div v-for="response in question.responses">
-            <button class="responseButton" v-bind:name="index" v-on:click="submitAnswer(response.correct)">{{ response.text }}</button>
+    <button id="startButton" v-on:click="startQuiz">Start Quiz!</button>
+    <div v-show=false id="entireQuiz">
+        <div v-for="(question, index) in quiz.questions">
+            <div v-show="index === questionIndex">
+                <h2>{{ question.text }}</h2>
+                <p>{{ question.hint }}</p>
+                <div v-for="response in question.responses">
+                    <input type="radio" id="index" v-bind:value="response.correct" v-bind:name="index" v-on:click="submitAnswer(response.correct)">{{ response.text }}
+                </div>
+                <div id="prevNextButtons">
+                    <button id="prevButton" v-if="questionIndex > 0" v-on:click="prev">prev</button>
+                    <button id="nextButton" v-on:click="next">next</button>
+                </div>
+            </div>
+        </div>
+        <div>
+            <p>You got {{correctAnswers}} correct!</p>
         </div>
     </div>
-    <div>
-        <p>You got {{correctAnswers}} correct!</p>
+
     </div>
-</div>
 
 
 <script src="https://unpkg.com/vue"></script>
@@ -28,7 +38,7 @@
         questions: [
             {
                 text: "Which of the following theatres is the oldest operating theatre on Broadway?",
-                hint: "Hint: The correct theatre has been home to [title of show], Macbeth, and most recently, The Play That Goes Wrong" ,
+                hint: "Hint: The correct theatre has been home to [title of show], Macbeth, and most recently, The Play That Goes Wrong",
                 responses: [
                     { text: 'The Lyceum Theatre', correct: true },
                     { text: 'The Gershwin Theatre', correct: false },
@@ -51,12 +61,20 @@
 
     new Vue({
         el: '#app',
+
         data: {
             quiz: quiz,
             correctAnswers: 0,
             questionIndex: 0,
         },
         methods: {
+
+            startQuiz: function () {
+                $('#prevNextButtons').hide();
+                $('#entireQuiz').show();
+                $('#startButton').hide();
+            },
+
             submitAnswer: function (value) {
                 if (value) {
                     this.correctAnswers++;
@@ -64,9 +82,16 @@
                 else {
                     this.correctAnswers--;
                 }
-                onclick = this.disabled = true;
-                document.getElementsByClassName("responseButton").disabled = true;
-            }
+                $('#prevNextButtons').show();
+            },
+
+            next: function () {
+                this.questionIndex++;
+            },
+
+            prev: function () {
+                this.questionIndex--;
+            },
         }
     });
 </script>
