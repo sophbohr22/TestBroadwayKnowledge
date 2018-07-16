@@ -18,10 +18,10 @@
                 <div v-for="response in question.responses">
                     <input type="radio" class="radioButtons" v-bind:value="response.correct" v-bind:name="index" v-on:click="submitAnswer(response.correct)">{{ response.text }}
                 </div>
-                <div id="nextButton">
-                    <button v-on:click="next">next</button>
-                </div>
             </div>
+        </div>
+        <div id="nextButton">
+            <button v-on:click="next">next</button>
         </div>
         <div>
             <p>You got {{correctAnswers}} correct!</p>
@@ -75,6 +75,8 @@
             },
 
             submitAnswer: function (value) {
+                $('#nextButton').show();
+
                 if (value) {
                     this.correctAnswers++;
                 }
@@ -84,11 +86,10 @@
                 for (i = 0; i < x.length; i++) {
                     x[i].disabled = true;
                 }
-
-                $('#nextButton').show();
             },
 
-            next: function (value) {
+            next: function () {
+                $('#nextButton').hide();
                 this.questionIndex++;
 
                 var x = document.getElementsByClassName("radioButtons");
@@ -96,8 +97,6 @@
                 for (i = 0; i < x.length; i++) {
                     x[i].disabled = false;
                 }
-
-                $('#nextButton').hide();
                 //this is where i record whether it's correct or not
             },
         }
