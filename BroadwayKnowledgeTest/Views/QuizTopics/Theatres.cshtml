@@ -9,22 +9,27 @@
     <!-- Quiz title -->
     <h1>{{ quiz.title }}</h1>
     <button id="startButton" v-on:click="startQuiz">Start Quiz!</button>
-    <div v-show=false id="entireQuiz">
+    <div v-show="false" id="entireQuiz">
         <div v-for="(question, index) in quiz.questions">
             <div v-show="index === questionIndex">
                 <h2>{{ question.text }}</h2>
-                <!--have hint show up and stay if their first choice is wrong-->
+
                 <p>{{ question.hint }}</p>
+
                 <div v-for="response in question.responses">
                     <input type="radio" class="radioButtons" v-bind:value="response.correct" v-bind:name="index" v-on:click="submitAnswer(response.correct)">{{ response.text }}
                 </div>
+
+                <p class="rightResponse"> {{question.rightAnswerFeedback}} </p>
+                <p class="wrongResponse"> {{question.wrongAnswerFeedback}} </p>
+
             </div>
         </div>
         <div id="nextButton">
             <button v-on:click="next">next</button>
         </div>
-        <div>
-            <p>You got {{correctAnswers}} correct!</p>
+        <div v-show="questionIndex === quiz.questions.length">
+            <p>You got {{correctAnswers}} out of {{ quiz.questions.length }} correct!</p>
         </div>
     </div>
 </div>
@@ -37,7 +42,9 @@
         questions: [
             {
                 text: "Which of the following theatres is the oldest operating theatre on Broadway?",
-                hint: "Hint: The correct theatre has been home to [title of show], Macbeth, and most recently, The Play That Goes Wrong",
+                hint: "Fun fact: This theatre has been home to [title of show], Macbeth, and most recently, The Play That Goes Wrong",
+                rightAnswerFeedback: "Correct! You must be a big fan of landmark theatres. That's right, the Lyceum earned landmark status in 1974!",
+                wrongAnswerFeedback: "Incorrect, the Lyceum is indeed the oldest operating theatre on Broadway, it even earned landmark status in 1974!",
                 responses: [
                     { text: 'The Lyceum Theatre', correct: true },
                     { text: 'The Gershwin Theatre', correct: false },
@@ -46,13 +53,27 @@
                 ],
             },
             {
-                text: "Which of these theatres is NOT a Broadway theatre?",
-                hint: "Hint: The theatre below that is not a Broadway theatre is located in Milwaukee",
+                text: "Which of the following theatres is NOT a Broadway theatre?",
+                hint: "Fun fact: This theatre isn't located in New York, but in Milwaukee!",
+                rightAnswerFeedback: "Correct! Blah blah blah",
+                wrongAnswerFeedback: "Incorrect, Blah blah blah",
                 responses: [
                     { text: 'The Richard Rodgers Theatre', correct: false },
                     { text: 'The New Amsterdam Theatre', correct: false },
                     { text: 'The Pabst Theatre', correct: true },
                     { text: 'The Palace Theatre', correct: false }
+                ]
+            },
+            {
+                text: "The Gershwin Theatre has the largest capacity on Broadway. How many seats does it have?",
+                hint: "Fun fact: The Gershwin has been home to the popular show Wicked since 2003! It is the 6th longest running Broadway production.",
+                rightAnswerFeedback: "Correct! Bler bler bler",
+                wrongAnswerFeedback: "Incorrect, Bler bler bler",
+                responses: [
+                    { text: '2,001', correct: false },
+                    { text: '989', correct: false },
+                    { text: '1,536', correct: false },
+                    { text: '1,933', correct: true }
                 ]
             }
         ]
@@ -66,12 +87,14 @@
             correctAnswers: 0,
             questionIndex: 0,
         },
-        methods: {
 
+        methods: {
             startQuiz: function () {
                 $('#nextButton').hide();
                 $('#entireQuiz').show();
                 $('#startButton').hide();
+                $('.rightResponse').hide();
+                $('.wrongResponse').hide();
             },
 
             submitAnswer: function (value) {
@@ -79,6 +102,10 @@
 
                 if (value) {
                     this.correctAnswers++;
+                    $('.rightResponse').show();
+                }
+                else {
+                    $('.wrongResponse').show();
                 }
 
                 var x = document.getElementsByClassName("radioButtons");
@@ -90,6 +117,9 @@
 
             next: function () {
                 $('#nextButton').hide();
+                $('.rightResponse').hide();
+                $('.wrongResponse').hide();
+
                 this.questionIndex++;
 
                 var x = document.getElementsByClassName("radioButtons");
@@ -97,7 +127,6 @@
                 for (i = 0; i < x.length; i++) {
                     x[i].disabled = false;
                 }
-                //this is where i record whether it's correct or not
             },
         }
     });
