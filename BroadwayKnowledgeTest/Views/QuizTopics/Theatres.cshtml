@@ -11,7 +11,6 @@
         <div v-for="(question, index) in quiz.questions">
             <div v-show="index === questionIndex">
                 <h3>{{ question.text }}</h3>
-
                 <p>{{ question.hint }}</p>
 
                 <div v-for="response in question.responses">
@@ -66,7 +65,7 @@
                 text: "The Gershwin Theatre has the largest capacity on Broadway. How many seats does it have?",
                 hint: "Fun fact: The Gershwin has been home to the popular show Wicked since 2003! It is the 6th longest running Broadway production.",
                 rightAnswerFeedback: "Correct! Wow did you count the seats last time you saw Wicked? Maybe all those seats have helped it earn over 1 billion dollars!",
-                wrongAnswerFeedback: "Incorrect, there are in fact 1,933 seats in the Gershwin. Maybe all those seats have helped it over 1 billion dollars!",
+                wrongAnswerFeedback: "Incorrect, there are in fact 1,933 seats in the Gershwin. Maybe all those seats have helped it earn over 1 billion dollars!",
                 responses: [
                     { text: '2,001', correct: false },
                     { text: '989', correct: false },

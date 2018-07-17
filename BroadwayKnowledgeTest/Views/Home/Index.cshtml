@@ -2,15 +2,25 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div>
-    <h1>Welcome to the Broadway Knowledge Quiz Center!</h1>
-    <h2>Choose a quiz below to test your knowledge on a variety of Broadway topics</h2>
-    <h3>Last updated: July 2018</h3>
-</div>
-<div>
-    <a class="btn btn-primary" asp-area="" asp-controller="QuizTopics" asp-action="Theatres">Theatre Therapy</a>
-    <a class="btn btn-primary" asp-area="" asp-controller="QuizTopics" asp-action="Playbills">Which Playbill Played Broadway?</a>
-    <a class="btn btn-primary" asp-area="" asp-controller="QuizTopics" asp-action="Actors">All About Actors</a>
-    <a class="btn btn-primary" asp-area="" asp-controller="QuizTopics" asp-action="Songs">Which of These Songs is not Like the Other?</a>
-    <a class="btn btn-primary" asp-area="" asp-controller="QuizTopics" asp-action="Tonys">Tony Trivia</a>
+<div style="text-align: center">
+    <div>
+        <h1>Welcome to the Broadway Knowledge Quiz Center!</h1>
+        <h2>Choose a quiz below to test your knowledge on a variety of Broadway topics</h2>
+    </div>
+    <div>
+        <div class="row row-options">
+            <a class="btn btn-option" asp-area="" asp-controller="QuizTopics" asp-action="Theatres">Theatre Therapy</a>
+            <a class="btn btn-option" asp-area="" asp-controller="QuizTopics" asp-action="Playbills">Which Playbill Played Broadway?</a>
+        </div>
+        <div class="row row-options">
+            <a class="btn btn-option" asp-area="" asp-controller="QuizTopics" asp-action="Actors">All About Actors</a>
+            <a class="btn btn-option" asp-area="" asp-controller="QuizTopics" asp-action="Tonys">Tony Trivia</a>
+        </div>
+        <div class="row row-options">
+            <a class="btn btn-option" asp-area="" asp-controller="QuizTopics" asp-action="Songs">Which of These Songs is not Like the Other?</a>
+        </div>
+    </div>
+    <div>
+        <h3>Last updated: July 2018</h3>
+    </div>
 </div>
