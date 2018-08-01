@@ -14,7 +14,9 @@
                 <p>{{ question.hint }}</p>
 
                 <div v-for="response in question.responses">
-                    <input type="radio" class="radioButtons" v-bind:value="response.correct" v-bind:name="index" v-on:click="submitAnswer(response.correct)">{{ response.text }}
+                    <p>
+                        <input type="radio" class="radioButtons" v-bind:value="response.correct" v-bind:name="index" v-on:click="submitAnswer(response.correct)">{{ response.text }}
+                    </p>
                 </div>
 
                 <p class="rightResponse"> {{question.rightAnswerFeedback}} </p>
@@ -39,7 +41,7 @@
         questions: [
             {
                 text: "Which of the following theatres is the oldest operating theatre on Broadway?",
-                hint: "Fun fact: This theatre has been home to [title of show], Macbeth, and most recently, The Play That Goes Wrong",
+                hint: "Fun fact: This theatre has been home to '[title of show]', 'Macbeth', and most recently, 'The Play That Goes Wrong'",
                 rightAnswerFeedback: "Correct! You must be a big fan of landmark theatres. That's right, the Lyceum earned landmark status in 1974!",
                 wrongAnswerFeedback: "Incorrect, the Lyceum Theatre is indeed the oldest operating theatre on Broadway, it even earned landmark status in 1974!",
                 responses: [
@@ -63,8 +65,8 @@
             },
             {
                 text: "The Gershwin Theatre has the largest capacity on Broadway. How many seats does it have?",
-                hint: "Fun fact: The Gershwin has been home to the popular show Wicked since 2003! It is the 6th longest running Broadway production.",
-                rightAnswerFeedback: "Correct! Wow did you count the seats last time you saw Wicked? Maybe all those seats have helped it earn over 1 billion dollars!",
+                hint: "Fun fact: The Gershwin has been home to the popular show 'Wicked' since 2003! It is the 6th longest running Broadway production.",
+                rightAnswerFeedback: "Correct! Wow did you count the seats last time you saw 'Wicked'? Maybe all those seats have helped it earn over 1 billion dollars!",
                 wrongAnswerFeedback: "Incorrect, there are in fact 1,933 seats in the Gershwin. Maybe all those seats have helped it earn over 1 billion dollars!",
                 responses: [
                     { text: '2,001', correct: false },
@@ -74,7 +76,7 @@
                 ]
             },
             {
-                text: "The Phantom of the Opera is the longest running show on Broadway. Which theatre is it in?",
+                text: "'The Phantom of the Opera' is the longest running show on Broadway. Which theatre is it in?",
                 hint: "Fun fact: Each actor cast as The Phantom has a mask custom-made from a mold of his face!",
                 rightAnswerFeedback: "Correct! Your Phantom knowledge is 'Phantastic'!",
                 wrongAnswerFeedback: "Incorrect, the Majestic Theatre has been home to The Phantom of the Opera since 1988!",
@@ -87,7 +89,7 @@
             },
             {
                 text: "In which theatre have the shows 'Dear Evan Hansen' and 'Shuffle Along' been in?",
-                hint: "Fun fact: Dear Evan Hansen was nominated for 9 Tony awards and took home 6, while Shuffle Along was nominated for 10 and took home none.",
+                hint: "Fun fact: 'Dear Evan Hansen' was nominated for 9 Tony awards and took home 6, while 'Shuffle Along' was nominated for 10 and took home none.",
                 rightAnswerFeedback: "Correct! You have been found with the right answer! Now shuffle along to the next one!",
                 wrongAnswerFeedback: "Incorrect, it is the Music Box Theatre! Now shuffle along to the next question and try again!",
                 responses: [
@@ -99,7 +101,7 @@
             },
             {
                 text: "Which theatre has been home to 'Once on This Island' and 'Fun Home' due to it being a beautiful theatre in the round?",
-                hint: "Fun fact: 'Fun Home' won the Tony award for best musical in 2015 and 'Once on This Island' won the Tony award for best revival in 2018!",
+                hint: "Fun fact: 'Fun Home' won the Tony award for best musical in 2015 and 'Once on This Island' won the Tony award for best musical revival in 2018!",
                 rightAnswerFeedback: "Correct! You've really been a-'round' a lot of theatres!",
                 wrongAnswerFeedback: "Incorrect, it is in fact The Circle in the Square Theatre. Maybe go study up on some geometry.",
                 responses: [
@@ -109,6 +111,55 @@
                     { text: 'The Belasco Theatre', correct: false }
                 ]
             },
+            {
+                text: "How many theatres qualify as Broadway theatres?",
+                hint: "Fun fact: The rule of thumb is that if the theatre is in midtown Manhattan, has more than 500 seats, and regularly shows live performances, then it's a Broadway theatre!",
+                rightAnswerFeedback: "Correct! Have you made it to every one? After this quiz you'll know quite a few!",
+                wrongAnswerFeedback: "Incorrect, indeed there are 41 Broadway theatres! After this quiz you'll know quite a few!",
+                responses: [
+                    { text: '52', correct: false },
+                    { text: '39', correct: false },
+                    { text: '41', correct: true },
+                    { text: '62', correct: false }
+                ]
+            },
+            {
+                text: "Which theatre was gutted and redesigned to accomodate for the setting of 'Cats', and later remodeled in 2000 to return it to its original 1920s elegance?",
+                hint: "Fun fact: Another of Andrew Lloyd Webber's productions, 'School of Rock', opened in November 2015 in the same theatre!",
+                rightAnswerFeedback: "Correct! Andrew Lloyd Webber would be so proud!",
+                wrongAnswerFeedback: "Incorrect, it is the Winter Garden Theatre! Don't wait until winter to go see a show here!",
+                responses: [
+                    { text: 'The Winter Garden Theatre', correct: true },
+                    { text: 'The Helen Hayes Theatre', correct: false },
+                    { text: 'The Belasco Theatre', correct: false },
+                    { text: 'The Palace Theatre', correct: false }
+                ]
+            },
+            {
+                text: "Which theatre is the smallest theatre on Broadway, with only 597 seats?",
+                hint: "This theatre was home to the play 'The Humans' which took home four 2016 Tony awards including Best Play, Best Actor, and Best Actress!",
+                rightAnswerFeedback: "Correct! You got it! You're so smart, are you even human?",
+                wrongAnswerFeedback: "Incorrect, the Helen Hayes Theatre is indeed the smallest theatre. In fact, for a short time it was an ABC television studio!",
+                responses: [
+                    { text: 'The Brooks Atkinson Theatre', correct: false },
+                    { text: 'The Shubert Theatre', correct: false },
+                    { text: 'The Helen Hayes Theatre', correct: true },
+                    { text: 'The Imperial Theatre', correct: false }
+                ]
+            },
+            {
+                text: "Which theatre, formerly known as the Mansfield Theatre, was renamed in 1960 after a New York Times theatre critic?",
+                hint: "This theatre has been home to 'Rock of Ages', the revival of 'Spring Awakening', and 'Waitress'!",
+                rightAnswerFeedback: "Correct! I bet Brooks Atkinson would have given your performance 5 stars!",
+                wrongAnswerFeedback: "Incorrect, it is in fact the Brooks Atkinson Theatre, Brooks Atkinson even won a Pulitzer Prize in 1947!",
+                responses: [
+                    { text: 'The Brooks Atkinson Theatre', correct: true },
+                    { text: 'The Richard Rodgers Theatre', correct: false },
+                    { text: 'The Neil Simon', correct: false },
+                    { text: 'The Al Hirschfeld', correct: false }
+                ]
+            },
+
         ]
     };
 
