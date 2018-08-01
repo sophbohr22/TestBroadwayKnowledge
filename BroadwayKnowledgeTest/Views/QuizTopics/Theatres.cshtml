@@ -33,8 +33,8 @@
     </div>
 </div>
 
-
 <script src="https://unpkg.com/vue"></script>
+
 <script>
     var quiz = {
         title: 'Theatre Therapy',
@@ -103,7 +103,7 @@
                 text: "Which theatre has been home to 'Once on This Island' and 'Fun Home' due to it being a beautiful theatre in the round?",
                 hint: "Fun fact: 'Fun Home' won the Tony award for best musical in 2015 and 'Once on This Island' won the Tony award for best musical revival in 2018!",
                 rightAnswerFeedback: "Correct! You've really been a-'round' a lot of theatres!",
-                wrongAnswerFeedback: "Incorrect, it is in fact The Circle in the Square Theatre. Maybe go study up on some geometry.",
+                wrongAnswerFeedback: "Incorrect, it is in fact the Circle in the Square Theatre, which has around 840 seats which helps create a smaller more intimate theatre experience!",
                 responses: [
                     { text: 'The Ethel Barrymore Theatre', correct: false },
                     { text: 'The Circle in the Square Theatre', correct: true },
@@ -159,13 +159,12 @@
                     { text: 'The Al Hirschfeld', correct: false }
                 ]
             },
-
         ]
     };
 
     new Vue({
         el: '#app',
-
+    
         data: {
             quiz: quiz,
             correctAnswers: 0,
