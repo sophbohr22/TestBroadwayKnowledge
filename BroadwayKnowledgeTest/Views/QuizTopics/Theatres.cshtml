@@ -15,12 +15,14 @@
 
                 <div v-for="response in question.responses">
                     <p>
-                        <input type="radio" class="radioButtons" v-bind:value="response.correct" v-bind:name="index" v-on:click="submitAnswer(response.correct)">{{ response.text }}
+                        <input type="radio" class="radioButtons" v-bind:value="response.correct" v-bind:name="index" v-on:click="submitAnswer(response.correct, index)">{{ response.text }}
                     </p>
                 </div>
 
                 <p class="rightResponse"> {{question.rightAnswerFeedback}} </p>
                 <p class="wrongResponse"> {{question.wrongAnswerFeedback}} </p>
+
+                <img src="~/Lycuem.jpg" id="lyceum"/>
 
             </div>
         </div>
@@ -49,8 +51,8 @@
                     { text: 'The Gershwin Theatre', correct: false },
                     { text: 'The St. James Theatre', correct: false },
                     { text: 'The Brooks Atkinson Theatre', correct: false },
-
                 ],
+                photo: "~/Lycuem.jpg",
             },
             {
                 text: "Which of the following theatres is NOT a Broadway theatre?",
@@ -179,9 +181,11 @@
                 $('#startButton').hide();
                 $('.rightResponse').hide();
                 $('.wrongResponse').hide();
+
+                $('#lyceum').hide();
             },
 
-            submitAnswer: function (value) {
+            submitAnswer: function (value, index) {
                 $('#nextButton').show();
 
                 if (value) {
@@ -197,12 +201,23 @@
                 for (i = 0; i < x.length; i++) {
                     x[i].disabled = true;
                 }
+
+                //decides which picture is shown
+                switch (index) {
+                    case 0:
+                        $('#lyceum').show();
+                        break;
+                }
+                
             },
 
             next: function () {
                 $('#nextButton').hide();
                 $('.rightResponse').hide();
                 $('.wrongResponse').hide();
+
+                //hides all the photos again
+                $('#lyceum').hide(); //FIXME: doesn't actually hide it
 
                 this.questionIndex++;
 
