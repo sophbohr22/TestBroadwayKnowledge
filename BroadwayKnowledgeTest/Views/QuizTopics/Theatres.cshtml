@@ -4,9 +4,12 @@
 }
 <link href="~/css/site.css" rel="stylesheet" />
 <div id="app">
-    <!-- Quiz title -->
-    <h1>{{ quiz.title }}</h1>
-    <button class="btn" id="startButton" v-on:click="startQuiz">Start Quiz!</button>
+    <div class="row">
+        <div class="col-md-12">
+            <h1>{{ quiz.title }}</h1>
+            <button class="startButton btn btn-teal btn-md-size" v-on:click="startQuiz">Start Quiz!</button>
+        </div>
+    </div>
     <div class="row" id="entireQuiz" v-show="false">
         <div class="col-md-6">
             <div v-for="(question, index) in quiz.questions">
@@ -20,19 +23,25 @@
                         </p>
                     </div>
 
-                    <p class="rightResponse"> {{question.rightAnswerFeedback}} </p>
-                    <p class="wrongResponse"> {{question.wrongAnswerFeedback}} </p>
+                    <p class="rightResponse"> {{ question.rightAnswerFeedback }} </p>
+                    <p class="wrongResponse"> {{ question.wrongAnswerFeedback }} </p>
 
                     <div>
-                        <button class="btn nextButton" v-on:click="next(index)">next</button>
+                        <button class="nextButton btn btn-teal btn-sm-size" v-on:click="next(index)">next</button>
                     </div>
 
                 </div>
             </div>
             <div v-show="questionIndex === quiz.questions.length">
-                <p>You got {{correctAnswers}} out of {{ quiz.questions.length }} correct!</p>
+                <button class="seeResults btn btn-teal btn-md-size" v-on:click="displayResults(quiz.questions.length)">See my results!</button>
 
-                <a class="btn btn-option" asp-area="" asp-controller="Home" asp-action="Index">Back to Home</a>
+                <div class="results">
+                    <h1>Ranking: {{ finalRanking }} </h1>
+                    <h2>You earned a score of {{ finalScore }}%!</h2>
+                    <p> {{ finalScoreFeedback }} </p>
+
+                    <a class="btn btn-teal btn-md-size" asp-area="" asp-controller="Home" asp-action="Index">Back to Home</a>
+                </div>
             </div>
         </div>
         <div class="col-md-6">
@@ -46,6 +55,7 @@
             <img src="~/WinterGarden.jpg" class="pic pic_wintergarden" />
             <img src="~/HelenHayes.jpg" class="pic pic_helenhayes" />
             <img src="~/BrooksAtkinson.jpg" class="pic pic_brooksatkinson" />
+            <img src="~/FinalPhoto.jpg" class="pic pic_finalphoto" />
         </div>
     </div>
 </div>
@@ -124,9 +134,9 @@
                 wrongAnswerFeedback: "Incorrect, it is in fact the Circle in the Square Theatre, which has around 840 seats which helps create a smaller more intimate theatre experience!",
                 responses: [
                     { text: 'The Ethel Barrymore Theatre', correct: false },
-                    { text: 'The Circle in the Square Theatre', correct: true },
                     { text: 'Studio 54', correct: false },
-                    { text: 'The Belasco Theatre', correct: false }
+                    { text: 'The Belasco Theatre', correct: false },
+                    { text: 'The Circle in the Square Theatre', correct: true }
                 ]
             },
             {
@@ -182,19 +192,23 @@
 
     new Vue({
         el: '#app',
-    
+
         data: {
             quiz: quiz,
             correctAnswers: 0,
             questionIndex: 0,
+            finalScore: 0,
+            finalScoreFeedback: "",
+            finalRanking: "",
         },
 
         methods: {
             startQuiz: function () {
                 $('.nextButton').hide();
-                $('#startButton').hide();
+                $('.startButton').hide();
                 $('.rightResponse').hide();
                 $('.wrongResponse').hide();
+                $('.results').hide();
 
                 $('.pic_lyceum').hide();
                 $('.pic_pabst').hide();
@@ -206,6 +220,7 @@
                 $('.pic_wintergarden').hide();
                 $('.pic_helenhayes').hide();
                 $('.pic_brooksatkinson').hide();
+                $('.pic_finalphoto').hide();
 
                 $('#entireQuiz').show();
             },
@@ -260,7 +275,7 @@
                         $('.pic_brooksatkinson').show();
                         break;
                 }
-                
+
             },
 
             next: function (index) {
@@ -301,7 +316,7 @@
                         $('.pic_brooksatkinson').hide();
                         break;
                 }
-                
+
                 this.questionIndex++;
 
                 var x = document.getElementsByClassName("radioButtons");
@@ -310,6 +325,44 @@
                     x[i].disabled = false;
                 }
             },
+
+            displayResults: function (totalQuestions) {
+                this.finalScore = (this.correctAnswers / totalQuestions) * 100;
+                var score = this.correctAnswers;
+
+                if (score == 0 || score == 1) {
+                    this.finalScoreFeedback = "Oh no, it seems you didn't know too much about Broadway theatres! That's alright, hopefully you know more now. Still, you've earned a ranking of 'Unpaid Volunteer Usher'. Better luck next time!";
+                    this.finalRanking = "Unpaid Volunteer Usher";
+                }
+                else if (score == 2 || score == 3) {
+                    this.finalScoreFeedback = "You knew just a little about Broadway theatres! Maybe you've just been hanging out Off-Broadway. You've earned a ranking of 'Usher'. I guess someone has to tell the audience where the stage door is! Better luck next time!";
+                    this.finalRanking = "Usher";
+                }
+                else if (score == 4 || score == 5) {
+                    this.finalScoreFeedback = "Not bad, but not great! Perhaps you confused Broadway with its cousin across the pond, the West End. You've earned a ranking of 'Box Office Attendant'. Hey, if you can't see the show at least you'll see a bunch of people who will!";
+                    this.finalRanking = "Box Office Attendant";
+                }
+                else if (score == 6 || score == 7) {
+                    this.finalScoreFeedback = "You know your Broadway theatres pretty well! Maybe you missed a few because you were up too late after a show last night. You've earned a ranking of 'Broadway Critic', you're either loved or despised, but either way you're guaranteed tickets to the hottest shows in town!";
+                    this.finalRanking = "Broadway Critic";
+                }
+                else if (score == 8) {
+                    this.finalScoreFeedback = "Wow you really know your Broadway theatres! You've earned a ranking of 'Broadway Producer'! It's a risky job, but if you're good at scoping out the next big hit you can make it big! Great job!";
+                    this.finalRanking = "Broadway Producer";
+                }
+                else if (score == 9) {
+                    this.finalScoreFeedback = "You're a Broadway theatre expert! You must live in the theatre district! You've earned a ranking of 'Broadway Director'! Who knows, you might even bring home the Tony this season! Fantastic work!";
+                    this.finalRanking = "Broadway Director";
+                }
+                else if (score == 10) {
+                    this.finalScoreFeedback = "You earned a perfect score and knew every theatre in this quiz! Impeccable work! You belong on the stage, and have earned a ranking of 'Broadway Star'! Your name will be up in lights, and there will surely be a huge crowd at the stage door waiting for your signature!";
+                    this.finalRanking = "Broadway Star";
+                }
+
+                $('.seeResults').hide();
+                $('.pic_finalphoto').show();
+                $('.results').show();
+            }
         }
     });
 </script>
