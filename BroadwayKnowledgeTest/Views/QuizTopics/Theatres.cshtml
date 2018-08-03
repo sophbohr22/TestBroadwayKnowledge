@@ -7,30 +7,45 @@
     <!-- Quiz title -->
     <h1>{{ quiz.title }}</h1>
     <button class="btn" id="startButton" v-on:click="startQuiz">Start Quiz!</button>
-    <div v-show="false" id="entireQuiz">
-        <div v-for="(question, index) in quiz.questions">
-            <div v-show="index === questionIndex">
-                <h3>{{ question.text }}</h3>
-                <p>{{ question.hint }}</p>
+    <div class="row" id="entireQuiz" v-show="false">
+        <div class="col-md-6">
+            <div v-for="(question, index) in quiz.questions">
+                <div v-show="index === questionIndex">
+                    <h3>{{ question.text }}</h3>
+                    <p>{{ question.hint }}</p>
 
-                <div v-for="response in question.responses">
-                    <p>
-                        <input type="radio" class="radioButtons" v-bind:value="response.correct" v-bind:name="index" v-on:click="submitAnswer(response.correct, index)">{{ response.text }}
-                    </p>
+                    <div v-for="response in question.responses">
+                        <p>
+                            <input type="radio" class="radioButtons" v-bind:value="response.correct" v-bind:name="index" v-on:click="submitAnswer(response.correct, index)">{{ response.text }}
+                        </p>
+                    </div>
+
+                    <p class="rightResponse"> {{question.rightAnswerFeedback}} </p>
+                    <p class="wrongResponse"> {{question.wrongAnswerFeedback}} </p>
+
+                    <div>
+                        <button class="btn nextButton" v-on:click="next(index)">next</button>
+                    </div>
+
                 </div>
+            </div>
+            <div v-show="questionIndex === quiz.questions.length">
+                <p>You got {{correctAnswers}} out of {{ quiz.questions.length }} correct!</p>
 
-                <p class="rightResponse"> {{question.rightAnswerFeedback}} </p>
-                <p class="wrongResponse"> {{question.wrongAnswerFeedback}} </p>
-
-                <img src="~/Lycuem.jpg" id="lyceum"/>
-
+                <a class="btn btn-option" asp-area="" asp-controller="Home" asp-action="Index">Back to Home</a>
             </div>
         </div>
-        <div>
-            <button class="btn" id="nextButton" v-on:click="next">next</button>
-        </div>
-        <div v-show="questionIndex === quiz.questions.length">
-            <p>You got {{correctAnswers}} out of {{ quiz.questions.length }} correct!</p>
+        <div class="col-md-6">
+            <img src="~/Lycuem.jpg" class="pic pic_lyceum" />
+            <img src="~/Pabst.jpg" class="pic pic_pabst" />
+            <img src="~/Gershwin.jpg" class="pic pic_gershwin" />
+            <img src="~/Majestic.jpg" class="pic pic_majestic" />
+            <img src="~/MusicBox.jpg" class="pic pic_musicbox" />
+            <img src="~/CircleInTheSquare.jpg" class="pic pic_circleinthesquare" />
+            <img src="~/TheatreNum.png" class="pic pic_theatrenum" />
+            <img src="~/WinterGarden.jpg" class="pic pic_wintergarden" />
+            <img src="~/HelenHayes.jpg" class="pic pic_helenhayes" />
+            <img src="~/BrooksAtkinson.jpg" class="pic pic_brooksatkinson" />
         </div>
     </div>
 </div>
@@ -38,6 +53,7 @@
 <script src="https://unpkg.com/vue"></script>
 
 <script>
+    
     var quiz = {
         title: 'Theatre Therapy',
         questions: [
@@ -51,8 +67,7 @@
                     { text: 'The Gershwin Theatre', correct: false },
                     { text: 'The St. James Theatre', correct: false },
                     { text: 'The Brooks Atkinson Theatre', correct: false },
-                ],
-                photo: "~/Lycuem.jpg",
+                ]
             },
             {
                 text: "Which of the following theatres is NOT a Broadway theatre?",
@@ -176,17 +191,27 @@
 
         methods: {
             startQuiz: function () {
-                $('#nextButton').hide();
-                $('#entireQuiz').show();
+                $('.nextButton').hide();
                 $('#startButton').hide();
                 $('.rightResponse').hide();
                 $('.wrongResponse').hide();
 
-                $('#lyceum').hide();
+                $('.pic_lyceum').hide();
+                $('.pic_pabst').hide();
+                $('.pic_gershwin').hide();
+                $('.pic_majestic').hide();
+                $('.pic_musicbox').hide();
+                $('.pic_circleinthesquare').hide();
+                $('.pic_theatrenum').hide();
+                $('.pic_wintergarden').hide();
+                $('.pic_helenhayes').hide();
+                $('.pic_brooksatkinson').hide();
+
+                $('#entireQuiz').show();
             },
 
             submitAnswer: function (value, index) {
-                $('#nextButton').show();
+                $('.nextButton').show();
 
                 if (value) {
                     this.correctAnswers++;
@@ -205,20 +230,78 @@
                 //decides which picture is shown
                 switch (index) {
                     case 0:
-                        $('#lyceum').show();
+                        $('.pic_lyceum').show();
+                        break;
+                    case 1:
+                        $('.pic_pabst').show();
+                        break;
+                    case 2:
+                        $('.pic_gershwin').show();
+                        break;
+                    case 3:
+                        $('.pic_majestic').show();
+                        break;
+                    case 4:
+                        $('.pic_musicbox').show();
+                        break;
+                    case 5:
+                        $('.pic_circleinthesquare').show();
+                        break;
+                    case 6:
+                        $('.pic_theatrenum').show();
+                        break;
+                    case 7:
+                        $('.pic_wintergarden').show();
+                        break;
+                    case 8:
+                        $('.pic_helenhayes').show();
+                        break;
+                    case 9:
+                        $('.pic_brooksatkinson').show();
                         break;
                 }
                 
             },
 
-            next: function () {
-                $('#nextButton').hide();
+            next: function (index) {
+                $('.nextButton').hide();
                 $('.rightResponse').hide();
                 $('.wrongResponse').hide();
 
-                //hides all the photos again
-                $('#lyceum').hide(); //FIXME: doesn't actually hide it
-
+                //decides which picture is shown
+                switch (index) {
+                    case 0:
+                        $('.pic_lyceum').hide();
+                        break;
+                    case 1:
+                        $('.pic_pabst').hide();
+                        break;
+                    case 2:
+                        $('.pic_gershwin').hide();
+                        break;
+                    case 3:
+                        $('.pic_majestic').hide();
+                        break;
+                    case 4:
+                        $('.pic_musicbox').hide();
+                        break;
+                    case 5:
+                        $('.pic_circleinthesquare').hide();
+                        break;
+                    case 6:
+                        $('.pic_theatrenum').hide();
+                        break;
+                    case 7:
+                        $('.pic_wintergarden').hide();
+                        break;
+                    case 8:
+                        $('.pic_helenhayes').hide();
+                        break;
+                    case 9:
+                        $('.pic_brooksatkinson').hide();
+                        break;
+                }
+                
                 this.questionIndex++;
 
                 var x = document.getElementsByClassName("radioButtons");
