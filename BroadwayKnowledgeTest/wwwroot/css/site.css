@@ -104,3 +104,16 @@ img {
     margin-bottom: 0.5em;
     width: 100%;
 }
+
+nav {
+    border-color: #2B7A78 !important;
+    background-color: #DEF2F1 !important;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    color: #2B7A78;
+}
+
+.navbar-inverse .navbar-nav > li > a:hover {
+    color: white;
+}
