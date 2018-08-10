@@ -4,5 +4,47 @@
 }
 
 <h1>Sort the Songs</h1>
-<h2>Coming Soon!</h2>
 
+<!DOCTYPE HTML>
+<html>
+<head>
+    <style>
+        #div1, #div2 {
+            float: left;
+            width: 10em;
+            height: 4em;
+            margin: 1em;
+            padding: 1em;
+            border: 0.1em solid black;
+            text-align: center;
+        }
+    </style>
+    <script>
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+
+        function drag(ev) {
+            ev.dataTransfer.setData("text", ev.target.id);
+        }
+
+        function drop(ev) {
+            ev.preventDefault();
+            var data = ev.dataTransfer.getData("text");
+            ev.target.appendChild(document.getElementById(data));
+        }
+    </script>
+</head>
+<body>
+
+    <h2>Drag and Drop</h2>
+    <p>Drag the image back and forth between the two div elements.</p>
+
+    <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+        <p draggable="true" ondragstart="drag(event)" id="drag1" width="88" height="31"> drag text test </p>
+    </div>
+
+    <div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+
+</body>
+</html>
