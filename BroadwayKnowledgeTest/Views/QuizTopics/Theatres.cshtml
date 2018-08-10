@@ -1,0 +1,369 @@
+﻿
+@{
+    ViewData["Title"] = "Theatres";
+}
+<link href="~/css/site.css" rel="stylesheet" />
+<div id="app">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>{{ quiz.title }}</h1>
+            <button class="startButton btn btn-teal btn-md-size" v-on:click="startQuiz">Start Quiz!</button>
+        </div>
+    </div>
+    <div class="row" id="entireQuiz" v-show="false">
+        <div class="col-md-6">
+            <div v-for="(question, index) in quiz.questions">
+                <div v-show="index === questionIndex">
+                    <h3>{{ question.text }}</h3>
+                    <p>{{ question.hint }}</p>
+
+                    <div v-for="response in question.responses">
+                        <p>
+                            <input type="radio" class="radioButtons" v-bind:value="response.correct" v-bind:name="index" v-on:click="submitAnswer(response.correct, index)">{{ response.text }}
+                        </p>
+                    </div>
+
+                    <p class="rightResponse"> {{ question.rightAnswerFeedback }} </p>
+                    <p class="wrongResponse"> {{ question.wrongAnswerFeedback }} </p>
+
+                    <div>
+                        <button class="nextButton btn btn-teal btn-sm-size" v-on:click="next(index)">next</button>
+                    </div>
+
+                </div>
+            </div>
+            <div v-show="questionIndex === quiz.questions.length">
+                <button class="seeResults btn btn-teal btn-md-size" v-on:click="displayResults(quiz.questions.length)">See my results!</button>
+
+                <div class="results">
+                    <h1>Ranking: {{ finalRanking }} </h1>
+                    <h2>You earned a score of {{ finalScore }}%!</h2>
+                    <p> {{ finalScoreFeedback }} </p>
+
+                    <a class="btn btn-teal btn-md-size" asp-area="" asp-controller="Home" asp-action="Index">Back to Home</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <img src="~/Lycuem.jpg" class="pic pic_lyceum" />
+            <img src="~/Pabst.jpg" class="pic pic_pabst" />
+            <img src="~/Gershwin.jpg" class="pic pic_gershwin" />
+            <img src="~/Majestic.jpg" class="pic pic_majestic" />
+            <img src="~/MusicBox.jpg" class="pic pic_musicbox" />
+            <img src="~/CircleInTheSquare.jpg" class="pic pic_circleinthesquare" />
+            <img src="~/TheatreNum.png" class="pic pic_theatrenum" />
+            <img src="~/WinterGarden.jpg" class="pic pic_wintergarden" />
+            <img src="~/HelenHayes.jpg" class="pic pic_helenhayes" />
+            <img src="~/BrooksAtkinson.jpg" class="pic pic_brooksatkinson" />
+            <img src="~/FinalPhoto.jpg" class="pic pic_finalphoto" />
+        </div>
+    </div>
+</div>
+
+<script src="https://unpkg.com/vue"></script>
+
+<script>
+    
+    var quiz = {
+        title: 'Theatre Therapy',
+        questions: [
+            {
+                text: "Which of the following theatres is the oldest operating theatre on Broadway?",
+                hint: "Fun fact: This theatre has been home to 'Macbeth', 'Oh, Hello', and 'The Play That Goes Wrong'",
+                rightAnswerFeedback: "Correct! You must be a big fan of landmark theatres. That's right, the Lyceum earned landmark status in 1974!",
+                wrongAnswerFeedback: "Incorrect, the Lyceum Theatre is indeed the oldest operating theatre on Broadway, it even earned landmark status in 1974!",
+                responses: [
+                    { text: 'The Lyceum Theatre', correct: true },
+                    { text: 'The Gershwin Theatre', correct: false },
+                    { text: 'The St. James Theatre', correct: false },
+                    { text: 'The Brooks Atkinson Theatre', correct: false },
+                ]
+            },
+            {
+                text: "Which of the following theatres is NOT a Broadway theatre?",
+                hint: "Fun fact: This theatre isn't located in New York, but in Milwaukee!",
+                rightAnswerFeedback: "Correct! Milwaukee has been home to the Pabst Theatre, a staple in Milwaukee's theatre scene, since 1895!",
+                wrongAnswerFeedback: "Incorrect, the Pabst Theatre has been a staple in Milwaukee's theatre scene since 1895!",
+                responses: [
+                    { text: 'The Richard Rodgers Theatre', correct: false },
+                    { text: 'The New Amsterdam Theatre', correct: false },
+                    { text: 'The Pabst Theatre', correct: true },
+                    { text: 'The Palace Theatre', correct: false }
+                ]
+            },
+            {
+                text: "The Gershwin Theatre has the largest capacity on Broadway. How many seats does it have?",
+                hint: "Fun fact: The Gershwin has been home to the popular show 'Wicked' since 2003! It is the 6th longest running Broadway production.",
+                rightAnswerFeedback: "Correct! Wow did you count the seats last time you saw 'Wicked'? Maybe all those seats have helped it earn over 1 billion dollars!",
+                wrongAnswerFeedback: "Incorrect, there are in fact 1,933 seats in the Gershwin. Maybe all those seats have helped it earn over 1 billion dollars!",
+                responses: [
+                    { text: '2,001', correct: false },
+                    { text: '989', correct: false },
+                    { text: '1,536', correct: false },
+                    { text: '1,933', correct: true }
+                ]
+            },
+            {
+                text: "'The Phantom of the Opera' is the longest running show on Broadway. Which theatre is it in?",
+                hint: "Fun fact: Each actor cast as The Phantom has a mask custom-made from a mold of his face!",
+                rightAnswerFeedback: "Correct! Your Phantom knowledge is 'Phantastic'! The Majestic Theatre has been home to the Phantom since 1988!",
+                wrongAnswerFeedback: "Incorrect, the Majestic Theatre has been home to The Phantom of the Opera since 1988!",
+                responses: [
+                    { text: 'The Brooks Atkinson Theatre', correct: false },
+                    { text: 'The Majestic Theatre', correct: true },
+                    { text: 'The Minskoff Theatre', correct: false },
+                    { text: 'The August Wilson Theatre', correct: false }
+                ]
+            },
+            {
+                text: "In which theatre have the shows 'Dear Evan Hansen' and 'Shuffle Along' been in?",
+                hint: "Fun fact: 'Dear Evan Hansen' was nominated for 9 Tony awards and took home 6, while 'Shuffle Along' was nominated for 10 and took home none.",
+                rightAnswerFeedback: "Correct! The Music Box was actually built by composer Irving Berlin to house his famed 'Music Box Revues'!",
+                wrongAnswerFeedback: "Incorrect, it is the Music Box Theatre! The Music Box was actually built by composer Irving Berlin to house his famed 'Music Box Revues'!",
+                responses: [
+                    { text: 'The Music Box Theatre', correct: true },
+                    { text: 'The Richard Rodgers Theatre', correct: false },
+                    { text: 'The Walter Kerr Theatre', correct: false },
+                    { text: 'Studio 54', correct: false }
+                ]
+            },
+            {
+                text: "Which theatre has been home to 'Once on This Island' and 'Fun Home' due to it being a beautiful theatre in the round?",
+                hint: "Fun fact: 'Fun Home' won the Tony award for best musical in 2015 and 'Once on This Island' won the Tony award for best musical revival in 2018!",
+                rightAnswerFeedback: "Correct! You've really been a-'round' a lot of theatres! Did you also know that this theatre serves as the location for the only accredited training conservatory associated with a Broadway theatre?",
+                wrongAnswerFeedback: "Incorrect, it is in fact the Circle in the Square Theatre, which has around 840 seats which helps create a smaller more intimate theatre experience!",
+                responses: [
+                    { text: 'The Ethel Barrymore Theatre', correct: false },
+                    { text: 'Studio 54', correct: false },
+                    { text: 'The Belasco Theatre', correct: false },
+                    { text: 'The Circle in the Square Theatre', correct: true }
+                ]
+            },
+            {
+                text: "How many theatres qualify as Broadway theatres?",
+                hint: "Fun fact: The rule of thumb is that if the theatre is in midtown Manhattan, has more than 500 seats, and regularly shows live performances, then it's a Broadway theatre!",
+                rightAnswerFeedback: "Correct! Have you made it to every one? After this quiz you'll know quite a few!",
+                wrongAnswerFeedback: "Incorrect, indeed there are 41 Broadway theatres! After this quiz you'll know quite a few!",
+                responses: [
+                    { text: '52', correct: false },
+                    { text: '39', correct: false },
+                    { text: '41', correct: true },
+                    { text: '62', correct: false }
+                ]
+            },
+            {
+                text: "Which theatre was gutted and redesigned to accomodate for the setting of 'Cats', and later remodeled in 2000 to return it to its original 1920s elegance?",
+                hint: "Fun fact: Another of Andrew Lloyd Webber's productions, 'School of Rock', opened in November 2015 in the same theatre!",
+                rightAnswerFeedback: "Correct! Andrew Lloyd Webber would be so proud! Did you know the original production of 'Cats' ran here for almost 18 years?",
+                wrongAnswerFeedback: "Incorrect, it is the Winter Garden Theatre! In fact, the original production of 'Cats' ran here for almost 18 years.",
+                responses: [
+                    { text: 'The Winter Garden Theatre', correct: true },
+                    { text: 'The Helen Hayes Theatre', correct: false },
+                    { text: 'The Belasco Theatre', correct: false },
+                    { text: 'The Palace Theatre', correct: false }
+                ]
+            },
+            {
+                text: "Which theatre is the smallest theatre on Broadway, with only 597 seats?",
+                hint: "Fun fact: This theatre was home to the play 'The Humans' which took home four 2016 Tony awards including Best Play, Best Actor, and Best Actress!",
+                rightAnswerFeedback: "Correct! You got it! In fact, the Helen Hayes Theatre is so small for a short time it was an ABC television studio!",
+                wrongAnswerFeedback: "Incorrect, the Helen Hayes Theatre is indeed the smallest theatre. In fact, for a short time it was an ABC television studio!",
+                responses: [
+                    { text: 'The Brooks Atkinson Theatre', correct: false },
+                    { text: 'The Shubert Theatre', correct: false },
+                    { text: 'The Helen Hayes Theatre', correct: true },
+                    { text: 'The Imperial Theatre', correct: false }
+                ]
+            },
+            {
+                text: "Which theatre, formerly known as the Mansfield Theatre, was renamed in 1960 after a New York Times theatre critic?",
+                hint: "Fun fact: This theatre has been home to 'Rock of Ages', the revival of 'Spring Awakening', and 'Waitress'!",
+                rightAnswerFeedback: "Correct! Not only was he a well-respected critic, Brooks Atkinson even won a Pulitzer Prize in 1947 for his work as a WWII correspondent!",
+                wrongAnswerFeedback: "Incorrect, it is in fact the Brooks Atkinson Theatre, Brooks Atkinson even won a Pulitzer Prize in 1947 for his work as a WWII correspondent!",
+                responses: [
+                    { text: 'The Brooks Atkinson Theatre', correct: true },
+                    { text: 'The Richard Rodgers Theatre', correct: false },
+                    { text: 'The Neil Simon Theatre', correct: false },
+                    { text: 'The Al Hirschfeld Theatre', correct: false }
+                ]
+            },
+        ]
+    };
+
+    new Vue({
+        el: '#app',
+
+        data: {
+            quiz: quiz,
+            correctAnswers: 0,
+            questionIndex: 0,
+            finalScore: 0,
+            finalScoreFeedback: "",
+            finalRanking: "",
+        },
+
+        methods: {
+            startQuiz: function () {
+                $('.nextButton').hide();
+                $('.startButton').hide();
+                $('.rightResponse').hide();
+                $('.wrongResponse').hide();
+                $('.results').hide();
+
+                $('.pic_lyceum').hide();
+                $('.pic_pabst').hide();
+                $('.pic_gershwin').hide();
+                $('.pic_majestic').hide();
+                $('.pic_musicbox').hide();
+                $('.pic_circleinthesquare').hide();
+                $('.pic_theatrenum').hide();
+                $('.pic_wintergarden').hide();
+                $('.pic_helenhayes').hide();
+                $('.pic_brooksatkinson').hide();
+                $('.pic_finalphoto').hide();
+
+                $('#entireQuiz').show();
+            },
+
+            submitAnswer: function (value, index) {
+                $('.nextButton').show();
+
+                if (value) {
+                    this.correctAnswers++;
+                    $('.rightResponse').show();
+                }
+                else {
+                    $('.wrongResponse').show();
+                }
+
+                var x = document.getElementsByClassName("radioButtons");
+                var i;
+                for (i = 0; i < x.length; i++) {
+                    x[i].disabled = true;
+                }
+
+                //decides which picture is shown
+                switch (index) {
+                    case 0:
+                        $('.pic_lyceum').show();
+                        break;
+                    case 1:
+                        $('.pic_pabst').show();
+                        break;
+                    case 2:
+                        $('.pic_gershwin').show();
+                        break;
+                    case 3:
+                        $('.pic_majestic').show();
+                        break;
+                    case 4:
+                        $('.pic_musicbox').show();
+                        break;
+                    case 5:
+                        $('.pic_circleinthesquare').show();
+                        break;
+                    case 6:
+                        $('.pic_theatrenum').show();
+                        break;
+                    case 7:
+                        $('.pic_wintergarden').show();
+                        break;
+                    case 8:
+                        $('.pic_helenhayes').show();
+                        break;
+                    case 9:
+                        $('.pic_brooksatkinson').show();
+                        break;
+                }
+
+            },
+
+            next: function (index) {
+                $('.nextButton').hide();
+                $('.rightResponse').hide();
+                $('.wrongResponse').hide();
+
+                //decides which picture is shown
+                switch (index) {
+                    case 0:
+                        $('.pic_lyceum').hide();
+                        break;
+                    case 1:
+                        $('.pic_pabst').hide();
+                        break;
+                    case 2:
+                        $('.pic_gershwin').hide();
+                        break;
+                    case 3:
+                        $('.pic_majestic').hide();
+                        break;
+                    case 4:
+                        $('.pic_musicbox').hide();
+                        break;
+                    case 5:
+                        $('.pic_circleinthesquare').hide();
+                        break;
+                    case 6:
+                        $('.pic_theatrenum').hide();
+                        break;
+                    case 7:
+                        $('.pic_wintergarden').hide();
+                        break;
+                    case 8:
+                        $('.pic_helenhayes').hide();
+                        break;
+                    case 9:
+                        $('.pic_brooksatkinson').hide();
+                        break;
+                }
+
+                this.questionIndex++;
+
+                var x = document.getElementsByClassName("radioButtons");
+                var i;
+                for (i = 0; i < x.length; i++) {
+                    x[i].disabled = false;
+                }
+            },
+
+            displayResults: function (totalQuestions) {
+                this.finalScore = (this.correctAnswers / totalQuestions) * 100;
+                var score = this.correctAnswers;
+
+                if (score == 0 || score == 1) {
+                    this.finalScoreFeedback = "Oh no, it seems you didn't know too much about Broadway theatres! That's alright, hopefully you know more now. Still, you've earned a ranking of 'Unpaid Volunteer Usher'. Better luck next time!";
+                    this.finalRanking = "Unpaid Volunteer Usher";
+                }
+                else if (score == 2 || score == 3) {
+                    this.finalScoreFeedback = "You knew just a little about Broadway theatres! Maybe you've just been hanging out Off-Broadway. You've earned a ranking of 'Usher'. I guess someone has to tell the audience where the stage door is! Better luck next time!";
+                    this.finalRanking = "Usher";
+                }
+                else if (score == 4 || score == 5) {
+                    this.finalScoreFeedback = "Not bad, but not great! Perhaps you confused Broadway with its cousin across the pond, the West End. You've earned a ranking of 'Box Office Attendant'. Hey, if you can't see the show at least you'll see a bunch of people who will!";
+                    this.finalRanking = "Box Office Attendant";
+                }
+                else if (score == 6 || score == 7) {
+                    this.finalScoreFeedback = "You know your Broadway theatres pretty well! Maybe you missed a few because you were up too late after a show last night. You've earned a ranking of 'Broadway Critic', you're either loved or despised, but either way you're guaranteed tickets to the hottest shows in town!";
+                    this.finalRanking = "Broadway Critic";
+                }
+                else if (score == 8) {
+                    this.finalScoreFeedback = "Wow you really know your Broadway theatres! You've earned a ranking of 'Broadway Producer'! It's a risky job, but if you're good at scoping out the next big hit you can make it big! Great job!";
+                    this.finalRanking = "Broadway Producer";
+                }
+                else if (score == 9) {
+                    this.finalScoreFeedback = "You're a Broadway theatre expert! You must live in the theatre district! You've earned a ranking of 'Broadway Director'! Who knows, you might even bring home the Tony this season! Fantastic work!";
+                    this.finalRanking = "Broadway Director";
+                }
+                else if (score == 10) {
+                    this.finalScoreFeedback = "You earned a perfect score and knew every theatre in this quiz! Impeccable work! You belong on the stage, and have earned a ranking of 'Broadway Star'! Your name will be up in lights, and there will surely be a huge crowd at the stage door waiting for your signature!";
+                    this.finalRanking = "Broadway Star";
+                }
+
+                $('.seeResults').hide();
+                $('.pic_finalphoto').show();
+                $('.results').show();
+            }
+        }
+    });
+</script>
+
