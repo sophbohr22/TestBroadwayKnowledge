@@ -55,16 +55,18 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <div id="start" ondrop="drop(event)" ondragover="allowDrop(event)">
-                    <button draggable="true" ondragstart="drag(event)" id="drag1" class="drag1 btn btn-sort-option" width="88" height="31"> Think of Me </button>
-                    <button draggable="true" ondragstart="drag(event)" id="drag2" class="drag2 btn btn-sort-option" width="88" height="31"> Phantom of the Opera </button>
-                    <button draggable="true" ondragstart="drag(event)" id="drag3" class="drag3 btn btn-sort-option" width="88" height="31"> All I Ask of You </button>
-                    <button draggable="true" ondragstart="drag(event)" id="drag4" class="drag4 btn btn-sort-option" width="88" height="31"> The Point of No Return </button>
+                <div id="start" ondrop="drop(event, this)" ondragover="allowDrop(event)">
+                    <button draggable="true" ondragstart="drag(event)" id="option1" class="drag1 btn btn-sort-option" width="88" height="31"> Think of Me </button>
+                    <button draggable="true" ondragstart="drag(event)" id="option2" class="drag2 btn btn-sort-option" width="88" height="31"> Phantom of the Opera </button>
+                    <button draggable="true" ondragstart="drag(event)" id="option3" class="drag3 btn btn-sort-option" width="88" height="31"> All I Ask of You </button>
+                    <button draggable="true" ondragstart="drag(event)" id="option4" class="drag4 btn btn-sort-option" width="88" height="31"> The Point of No Return </button>
                 </div>
             </div>
         </div>
-        <button v-on:click="checkDivs">Check!</button>
-        <p class="results"> {{feedback}} </p>
+        <div>
+            <button v-on:click="checkDivs">Check!</button>
+            <p class="results"> {{feedback}} </p>
+        </div>
     </div>
 </body>
 
@@ -80,16 +82,16 @@
 
         methods: {
             checkDivs: function () {
-                if ($(".drag1").parents("#div1").length == 1) {
+                if ($("#option1").parents("#div1").length == 1) {
                     this.correct++;
                 }
-                if ($(".drag2").parents("#div2").length == 1) {
+                if ($("#option2").parents("#div2").length == 1) {
                     this.correct++;
                 }
-                if ($(".drag3").parents("#div3").length == 1) {
+                if ($("#option3").parents("#div3").length == 1) {
                     this.correct++;
                 }
-                if ($(".drag4").parents("#div4").length == 1) {
+                if ($("#option4").parents("#div4").length == 1) {
                     this.correct++;
                 }
                 
@@ -117,5 +119,6 @@
         ev.preventDefault();
         var data = ev.dataTransfer.getData("text");
         el.appendChild(document.getElementById(data));
+
     }
 </script>
