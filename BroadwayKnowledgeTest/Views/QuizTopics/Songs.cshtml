@@ -6,54 +6,60 @@
 
 <head>
     <style>
-        #div1, #div2, #div3 {
+        #div1, #div2, #div3, #div4 {
             float: left;
-            width: 10em;
-            height: 4em;
-            margin: 1em;
+            width: 15em;
+            height: 5em;
+            margin: 0.5em;
             padding: 1em;
-            border: 0.1em solid black;
+            border: 0.1em solid #2B7A78;
             text-align: center;
         }
         #start {
             float: left;
-            width: 10em;
-            height: 12em;
+            width: 15em;
+            height: 17em;
             margin: 1em;
             padding: 1em;
-            border: 0.1em solid black;
+            border: 0.1em solid #2B7A78;
             text-align: center;
         }
     </style>
 </head>
 <body>
     <div id="app">
-        <h2>Drag and Drop</h2>
-        <p>Drag the image back and forth between the two div elements.</p>
+        <h2>Drag and drop the songs so that they're in the correct order.</h2>
+        <h3>Note: Only place one song per box!</h3>
 
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="row">
-                    <div id="div1" class="1" ondrop="drop(event)" ondragover="allowDrop(event)">
+                    <div id="div1" class="1" ondrop="drop(event, this)" ondragover="allowDrop(event)">
 
                     </div>
                 </div>
                 <div class="row">
-                    <div id="div2" class="2" ondrop="drop(event)" ondragover="allowDrop(event)">
+                    <div id="div2" class="2" ondrop="drop(event, this)" ondragover="allowDrop(event)">
 
                     </div>
                 </div>
                 <div class="row">
-                    <div id="div3" class="3" ondrop="drop(event)" ondragover="allowDrop(event)">
+                    <div id="div3" class="3" ondrop="drop(event, this)" ondragover="allowDrop(event)">
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div id="div4" class="4" ondrop="drop(event, this)" ondragover="allowDrop(event)">
 
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div id="start"  ondrop="drop(event)" ondragover="allowDrop(event)">
-                    <p draggable="true" ondragstart="drag(event)" id="drag1" class="drag1" width="88" height="31"> Think of Me </p>
-                    <p draggable="true" ondragstart="drag(event)" id="drag2" class="drag2" width="88" height="31"> Phantom of the Opera </p>
-                    <p draggable="true" ondragstart="drag(event)" id="drag3" class="drag3" width="88" height="31"> All I Ask of You </p>
+            <div class="col-md-4">
+                <div id="start" ondrop="drop(event)" ondragover="allowDrop(event)">
+                    <button draggable="true" ondragstart="drag(event)" id="drag1" class="drag1 btn btn-sort-option" width="88" height="31"> Think of Me </button>
+                    <button draggable="true" ondragstart="drag(event)" id="drag2" class="drag2 btn btn-sort-option" width="88" height="31"> Phantom of the Opera </button>
+                    <button draggable="true" ondragstart="drag(event)" id="drag3" class="drag3 btn btn-sort-option" width="88" height="31"> All I Ask of You </button>
+                    <button draggable="true" ondragstart="drag(event)" id="drag4" class="drag4 btn btn-sort-option" width="88" height="31"> The Point of No Return </button>
                 </div>
             </div>
         </div>
@@ -83,8 +89,11 @@
                 if ($(".drag3").parents("#div3").length == 1) {
                     this.correct++;
                 }
+                if ($(".drag4").parents("#div4").length == 1) {
+                    this.correct++;
+                }
                 
-                if (this.correct == 3) {
+                if (this.correct == 4) {
                     this.feedback = "You got them in the correct order!"
                 }
                 else {
@@ -104,9 +113,9 @@
         ev.dataTransfer.setData("text", ev.target.id);
     }
 
-    function drop(ev) {
+    function drop(ev, el) {
         ev.preventDefault();
         var data = ev.dataTransfer.getData("text");
-        ev.target.appendChild(document.getElementById(data));
+        el.appendChild(document.getElementById(data));
     }
 </script>
