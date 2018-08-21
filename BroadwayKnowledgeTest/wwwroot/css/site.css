@@ -99,6 +99,10 @@ input[type="radio"] {
     width: 6em;
 }
 
+.btn-check-size {
+    width: 15em;
+}
+
 .radioButtons {
     font-family: 'Noto Serif', serif;
     font-size: medium;
