@@ -17,7 +17,8 @@
                     <ul>
                         <li>Drag and drop the songs from the right to the boxes on the left so that they're in order (earlier songs at the top, later songs at the bottom)</li>
                         <li><b>Don't put more than one song in a box</b></li>
-                        <li>You can always put songs back on the right if you change your mind about a spot!</li>
+                        <li>You can always put songs back on the right if you change your mind about a spot</li>
+                        <li>Click "check" at the bottom when you're confident about the order!</li>
                     </ul>
 
                     <div class="row">
@@ -268,6 +269,7 @@
                 var element5 = document.getElementById(id5);
 
                 //these if statements check whether the songs ended up in their correct div locations
+                //if the div parents the element, the length is 1, so then correct answers is incremented
                 if ($(element1).parents("#div1").length == 1) {
                     this.correctAnswers++;
                 }
@@ -284,7 +286,7 @@
                     this.correctAnswers++;
                 }
 
-                //if all four are correct, the right response is shown, otherwise wrong response is shown
+                //if all five are correct, the right response is shown, otherwise wrong response is shown
                 if (this.correctAnswers == 5) {
                     $('.rightResponse').show();
                     this.questionsCorrect++;

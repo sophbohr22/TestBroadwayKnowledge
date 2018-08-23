@@ -46,8 +46,9 @@ p {
     color: #17252A;
 }
 
-.row-options {
-    align-content: center;
+.col-options {
+    align-content: center !important;
+    text-align: center !important;
 }
 
 input[type="radio"] {
@@ -86,7 +87,7 @@ input[type="radio"] {
 
 .btn-lg-size {
     font-size: large;
-    width: 24em;
+    width: 20em;
     margin: 1em;
     padding: 1em;
 }

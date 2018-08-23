@@ -3,24 +3,23 @@
 }
 <link href="~/css/site.css" rel="stylesheet" />
 
-<div style="text-align: center">
+<div>
     <div class="row">
-        <h1>Welcome to the Broadway Knowledge Quiz Center!</h1>
-        <h2>Choose a quiz below to test your knowledge on a variety of Broadway topics</h2>
-    </div>
-    <div class="row">
-        <div class="row row-options">
-            <a class="btn btn-teal btn-lg-size" asp-area="" asp-controller="QuizTopics" asp-action="Theatres">Theatre Therapy</a>
-            <a class="btn btn-teal btn-lg-size" asp-area="" asp-controller="QuizTopics" asp-action="Playbills">Which Playbill Played Broadway?</a>
-
-            <a class="btn btn-teal btn-lg-size" asp-area="" asp-controller="QuizTopics" asp-action="Actors">All About Actors</a>
-            <a class="btn btn-teal btn-lg-size" asp-area="" asp-controller="QuizTopics" asp-action="Tonys">Tony Trivia</a>
+        <div class="col-sm-12" style="text-align: center">
+            <h1>Welcome to the Broadway Knowledge Quiz Center!</h1>
+            <h2>Choose a quiz below to test your knowledge on a variety of Broadway topics</h2>
         </div>
-        <div class="row row-options">
-            <a class="btn btn-teal btn-lg-size" asp-area="" asp-controller="QuizTopics" asp-action="Songs">Sort the Songs</a>
+        <div class="row">
+            <div class="col-sm-12 col-options">
+                <a class="btn btn-teal btn-lg-size" asp-area="" asp-controller="QuizTopics" asp-action="Theatres">Theatre Therapy</a>
+                <a class="btn btn-teal btn-lg-size" asp-area="" asp-controller="QuizTopics" asp-action="Playbills">Which Playbill Played Broadway?</a>
+                <a class="btn btn-teal btn-lg-size" asp-area="" asp-controller="QuizTopics" asp-action="Actors">All About Actors</a>
+                <a class="btn btn-teal btn-lg-size" asp-area="" asp-controller="QuizTopics" asp-action="Tonys">Tony Trivia</a>
+                <a class="btn btn-teal btn-lg-size" asp-area="" asp-controller="QuizTopics" asp-action="Songs">Sort the Songs</a>
+            </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row" style="text-align: center">
         <h3>Last updated: August 2018</h3>
     </div>
 </div>
