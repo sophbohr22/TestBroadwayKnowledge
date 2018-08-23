@@ -17,7 +17,6 @@
                     <p>Drag and drop the songs from the right to the boxes on the left so that they're in order (earlier songs at the top, later songs at the bottom). Don't put more than one song in a box, and you can always put songs back on the right if you change your mind about a spot!</p>
 
                     <div class="row">
-
                         <div class="col-md-4">
                             <div class="row">
                                 <div id="div1" class="1" ondrop="drop(event, this)" ondragover="allowDrop(event)">
@@ -49,21 +48,18 @@
                                 <button draggable="true" ondragstart="drag(event)" v-bind:id="question.id4" class="btn btn-sort-option" width="88" height="31"> {{ question.text4 }} </button>
                             </div>
                         </div>
-
-                        <div>
-                            <p class="rightResponse"> {{ question.rightAnswerFeedback }} </p>
-                            <p class="wrongResponse"> {{ question.wrongAnswerFeedback }} </p>
+                        <div class="col-md-4">
+                            <!--where the pictures will go-->
                         </div>
-
                     </div>
                     <div class="row">
                         <button class="checkButton btn btn-teal btn-check-size" v-on:click="check(question.id1, question.id2, question.id3, question.id4)">Check!</button>
-                    </div>
 
-                    <div class="row">
+                        <p class="rightResponse"> {{ question.rightAnswerFeedback }} </p>
+                        <p class="wrongResponse"> {{ question.wrongAnswerFeedback }} </p>
+
                         <button class="nextButton btn btn-teal btn-sm-size" v-on:click="next(index)">next</button>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -107,9 +103,9 @@
 
         data: {
             quiz: quiz,
-            correctAnswers: 0,
-            questionIndex: 0,
-            questionsCorrect: 0,
+            correctAnswers: 0, //totals if all four songs are sorted correctly each time, and then is reset to 0
+            questionIndex: 0, //keeps track of which song index we are at
+            questionsCorrect: 0, //totals how many questions the user sorts perfectly
         },
 
         methods: {
