@@ -2,123 +2,144 @@
     ViewData["Title"] = "Songs";
 }
 <link href="~/css/site.css" rel="stylesheet" />
-
-<h1>Sort the Songs</h1>
-
-<head>
-    <style>
-        #div1, #div2, #div3, #div4 {
-            float: left;
-            width: 15em;
-            height: 5em;
-            margin-left: 1em;
-            margin-bottom: 0.8em;
-            padding: 1em;
-            border: 0.1em solid #2B7A78;
-            text-align: center;
-        }
-        #start {
-            float: left;
-            width: 15em;
-            height: 17em;
-            margin: 1em;
-            padding: 1em;
-            border: 0.1em solid #2B7A78;
-            text-align: center;
-        }
-    </style>
-</head>
-<body>
-    <div id="app">
-        <div class="row">
-            <div class="col-md-12">
-                <h1>dis be the quiz</h1>
-                <button class="startButton btn btn-teal btn-md-size" v-on:click="startQuiz">Start Quiz!</button>
-            </div>
+<div id="app">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>{{ quiz.title }}</h1>
+            <button class="startButton btn btn-teal btn-md-size" v-on:click="startQuiz">Start Quiz!</button>
         </div>
-        <div class="row" id="entireQuiz" v-show="false">
-            <h2>Drag and drop the songs so that they're in the correct order.</h2>
-            <h3>Note: Only place one song per box!</h3>
+    </div>
+    <div class="row" id="entireQuiz" v-show="false">
+        <div class="col-md-12">
+            <div v-for="(question, index) in quiz.questions">
+                <div v-show="index === questionIndex">
+                    <h3>{{ question.text }}</h3>
+                    <p>Drag and drop the songs from the right to the boxes on the left so that they're in order (earlier songs at the top, later songs at the bottom). Don't put more than one song in a box, and you can always put songs back on the right if you change your mind about a spot!</p>
 
-            <div class="row">
-                <div class="col-md-4">
                     <div class="row">
-                        <div id="div1" class="1" ondrop="drop(event, this)" ondragover="allowDrop(event)">
 
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div id="div2" class="2" ondrop="drop(event, this)" ondragover="allowDrop(event)">
+                        <div class="col-md-4">
+                            <div class="row">
+                                <div id="div1" class="1" ondrop="drop(event, this)" ondragover="allowDrop(event)">
 
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div id="div3" class="3" ondrop="drop(event, this)" ondragover="allowDrop(event)">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div id="div2" class="2" ondrop="drop(event, this)" ondragover="allowDrop(event)">
 
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div id="div4" class="4" ondrop="drop(event, this)" ondragover="allowDrop(event)">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div id="div3" class="3" ondrop="drop(event, this)" ondragover="allowDrop(event)">
 
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div id="div4" class="4" ondrop="drop(event, this)" ondragover="allowDrop(event)">
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <button class="checkButton btn btn-teal btn-check-size" v-on:click="check">Check!</button>
+                            </div>
                         </div>
+
+                        <div class="col-md-4">
+                            <div id="start" ondrop="drop(event, this)" ondragover="allowDrop(event)">
+                                <button draggable="true" ondragstart="drag(event)" id="option1" class="btn btn-sort-option" width="88" height="31"> {{ question.text1 }} </button>
+                                <button draggable="true" ondragstart="drag(event)" id="option2" class="btn btn-sort-option" width="88" height="31"> {{ question.text2 }} </button>
+                                <button draggable="true" ondragstart="drag(event)" id="option3" class="btn btn-sort-option" width="88" height="31"> {{ question.text3 }} </button>
+                                <button draggable="true" ondragstart="drag(event)" id="option4" class="btn btn-sort-option" width="88" height="31"> {{ question.text4 }} </button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p class="rightResponse"> {{ question.rightAnswerFeedback }} </p>
+                            <p class="wrongResponse"> {{ question.wrongAnswerFeedback }} </p>
+                        </div>
+
                     </div>
+                    
                     <div>
-                        <button class="btn btn-teal btn-check-size" v-on:click="checkDivs">Check!</button>
-                        <p class="results"> {{feedback}} </p>
+                        <button class="nextButton btn btn-teal btn-sm-size" v-on:click="next(index)">next</button>
+                    </div>
 
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div id="start" ondrop="drop(event, this)" ondragover="allowDrop(event)">
-                        <button draggable="true" ondragstart="drag(event)" id="option1" class="drag1 btn btn-sort-option" width="88" height="31"> Think of Me </button>
-                        <button draggable="true" ondragstart="drag(event)" id="option2" class="drag2 btn btn-sort-option" width="88" height="31"> Phantom of the Opera </button>
-                        <button draggable="true" ondragstart="drag(event)" id="option3" class="drag3 btn btn-sort-option" width="88" height="31"> All I Ask of You </button>
-                        <button draggable="true" ondragstart="drag(event)" id="option4" class="drag4 btn btn-sort-option" width="88" height="31"> The Point of No Return </button>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
-</body>
+</div>
 
 <script src="https://unpkg.com/vue"></script>
 <script>
+
+    var quiz = {
+        title: 'Sort the Songs!',
+        questions: [
+            {
+                text: "Sort these songs from 'The Phantom of the Opera' so that they're in the correct order!",
+                rightAnswerFeedback: "Correct! You got them all in the right order!",
+                wrongAnswerFeedback: "Incorrect, the correct order is 'Think of Me', 'Phantom of the Opera', 'All I Ask of You', and 'The Point of No Return'.",
+                text1: 'Think of Me',
+                text2: 'Phantom of the Opera',
+                text3: 'All I Ask of You',
+                text4: 'The Point of No Return'
+                
+            },
+            {
+                text: "Sort these songs from 'Rent' so that they're in the correct order!",
+                rightAnswerFeedback: "Correct! You got them all in the right order!",
+                wrongAnswerFeedback: "Incorrect, the correct order is 'Rent', 'Will I?', 'La Vie Boheme', and 'What You Own'.",
+                text1: 'Rent',
+                text2: 'Will I?',
+                text3: 'La Vie Boheme',
+                text4: 'What You Own'
+            }
+        ]
+    };
+
     new Vue({
         el: '#app',
 
         data: {
-            correct: 0,
-            feedback: "",
+            quiz: quiz,
+            correctAnswers: 0,
+            questionIndex: 0,
         },
 
         methods: {
             startQuiz: function () {
+                $('.nextButton').hide();
+                $('.startButton').hide();
+                $('.rightResponse').hide();
+                $('.wrongResponse').hide();
 
                 $('#entireQuiz').show();
             },
 
-            checkDivs: function () {
+            check: function () {
+                $('.nextButton').show();
+                $('.checkButton').hide();
+
                 if ($("#option1").parents("#div1").length == 1) {
-                    this.correct++;
+                    this.correctAnswers++;
                 }
                 if ($("#option2").parents("#div2").length == 1) {
-                    this.correct++;
+                    this.correctAnswers++;
                 }
                 if ($("#option3").parents("#div3").length == 1) {
-                    this.correct++;
+                    this.correctAnswers++;
                 }
                 if ($("#option4").parents("#div4").length == 1) {
-                    this.correct++;
-                }
-                
-                if (this.correct == 4) {
-                    this.feedback = "You got them in the correct order!"
-                }
-                else {
-                    this.feedback = "Sorry, they're not quite right."
+                    this.correctAnswers++;
                 }
 
-                this.clickedCheck = true;
+                if (this.correctAnswers == 4) {
+                    $('.rightResponse').show();
+                }
+                else {
+                    $('.wrongResponse').show();
+                }
 
                 var x = document.getElementsByClassName("btn-sort-option");
                 var i;
@@ -126,7 +147,28 @@
                     x[i].disabled = true;
                 }
 
+                //decides which picture is shown
             },
+
+            next: function (index) {
+                $('checkButton').show();
+                $('.nextButton').hide();
+                $('.rightResponse').hide();
+                $('.wrongResponse').hide();
+                
+
+                this.questionIndex++;
+
+                var x = document.getElementsByClassName("btn-sort-option");
+                var i;
+                for (i = 0; i < x.length; i++) {
+                    x[i].disabled = false;
+                }
+            },
+
+            displayResults: function (totalQuestions) {
+
+            }
         }
     });
 </script>
@@ -143,6 +185,5 @@
         ev.preventDefault();
         var data = ev.dataTransfer.getData("text");
         el.appendChild(document.getElementById(data));
-
     }
 </script>

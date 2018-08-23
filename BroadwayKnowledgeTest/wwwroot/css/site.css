@@ -101,6 +101,7 @@ input[type="radio"] {
 
 .btn-check-size {
     width: 15em;
+    margin-left: 1em;
 }
 
 .radioButtons {
@@ -135,4 +136,25 @@ nav {
 
 .navbar-inverse .navbar-nav > li > a:hover {
     color: #3AAFA9;
+}
+
+#div1, #div2, #div3, #div4 {
+    float: left;
+    width: 15em;
+    height: 5em;
+    margin-left: 1em;
+    margin-bottom: 0.8em;
+    padding: 1em;
+    border: 0.1em solid #2B7A78;
+    text-align: center;
+}
+
+#start {
+    float: left;
+    width: 15em;
+    height: 17em;
+    margin: 1em;
+    padding: 1em;
+    border: 0.1em solid #2B7A78;
+    text-align: center;
 }
