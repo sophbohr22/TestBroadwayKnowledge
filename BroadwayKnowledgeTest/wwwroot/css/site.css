@@ -99,9 +99,8 @@ input[type="radio"] {
     width: 6em;
 }
 
-.btn-check-size {
-    width: 15em;
-    margin-left: 1em;
+.checkButton {
+    width: 18em;
 }
 
 .radioButtons {
@@ -138,9 +137,17 @@ nav {
     color: #3AAFA9;
 }
 
-#div1, #div2, #div3, #div4 {
+.margin-left-space {
+    margin-left: 1em;
+}
+
+ul {
+    margin-bottom: 2em;
+}
+
+#div1, #div2, #div3, #div4, #div5 {
     float: left;
-    width: 15em;
+    width: 18em;
     height: 5em;
     margin-left: 1em;
     margin-bottom: 0.8em;
@@ -151,9 +158,10 @@ nav {
 
 #start {
     float: left;
-    width: 15em;
-    height: 17em;
-    margin: 1em;
+    width: 18em;
+    height: 23em;
+    margin-left: 1em;
+    margin-bottom: 1em;
     padding: 1em;
     border: 0.1em solid #2B7A78;
     text-align: center;

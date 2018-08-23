@@ -13,8 +13,12 @@
         <div class="col-md-12">
             <div v-for="(question, index) in quiz.questions">
                 <div v-show="index === questionIndex">
-                    <h3>{{ question.text }}</h3>
-                    <p>Drag and drop the songs from the right to the boxes on the left so that they're in order (earlier songs at the top, later songs at the bottom). Don't put more than one song in a box, and you can always put songs back on the right if you change your mind about a spot!</p>
+                    <h2>{{ question.text }}</h2>
+                    <ul>
+                        <li>Drag and drop the songs from the right to the boxes on the left so that they're in order (earlier songs at the top, later songs at the bottom)</li>
+                        <li><b>Don't put more than one song in a box</b></li>
+                        <li>You can always put songs back on the right if you change your mind about a spot!</li>
+                    </ul>
 
                     <div class="row">
                         <div class="col-md-4">
@@ -38,14 +42,20 @@
 
                                 </div>
                             </div>
+                            <div class="row">
+                                <div id="div5" class="5" ondrop="drop(event, this)" ondragover="allowDrop(event)">
+
+                                </div>
+                            </div>
                         </div>
 
                         <div class="col-md-4">
                             <div id="start" ondrop="drop(event, this)" ondragover="allowDrop(event)">
-                                <button draggable="true" ondragstart="drag(event)" v-bind:id="question.id1" class="btn btn-sort-option" width="88" height="31"> {{ question.text1 }} </button>
                                 <button draggable="true" ondragstart="drag(event)" v-bind:id="question.id2" class="btn btn-sort-option" width="88" height="31"> {{ question.text2 }} </button>
-                                <button draggable="true" ondragstart="drag(event)" v-bind:id="question.id3" class="btn btn-sort-option" width="88" height="31"> {{ question.text3 }} </button>
+                                <button draggable="true" ondragstart="drag(event)" v-bind:id="question.id1" class="btn btn-sort-option" width="88" height="31"> {{ question.text1 }} </button>
                                 <button draggable="true" ondragstart="drag(event)" v-bind:id="question.id4" class="btn btn-sort-option" width="88" height="31"> {{ question.text4 }} </button>
+                                <button draggable="true" ondragstart="drag(event)" v-bind:id="question.id5" class="btn btn-sort-option" width="88" height="31"> {{ question.text5 }} </button>
+                                <button draggable="true" ondragstart="drag(event)" v-bind:id="question.id3" class="btn btn-sort-option" width="88" height="31"> {{ question.text3 }} </button>
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -53,12 +63,12 @@
                         </div>
                     </div>
                     <div class="row">
-                        <button class="checkButton btn btn-teal btn-check-size" v-on:click="check(question.id1, question.id2, question.id3, question.id4)">Check!</button>
+                        <button class="checkButton btn btn-teal margin-left-space" v-on:click="check(question.id1, question.id2, question.id3, question.id4, question.id5)">Check!</button>
 
-                        <p class="rightResponse"> {{ question.rightAnswerFeedback }} </p>
-                        <p class="wrongResponse"> {{ question.wrongAnswerFeedback }} </p>
+                        <p class="rightResponse margin-left-space"> {{ question.rightAnswerFeedback }} </p>
+                        <p class="wrongResponse margin-left-space"> {{ question.wrongAnswerFeedback }} </p>
 
-                        <button class="nextButton btn btn-teal btn-sm-size" v-on:click="next(index)">next</button>
+                        <button class="nextButton btn btn-teal btn-sm-size margin-left-space" v-on:click="next(index)">next</button>
                     </div>
                 </div>
             </div>
@@ -75,25 +85,153 @@
             {
                 text: "Sort these songs from 'The Phantom of the Opera' so that they're in the correct order!",
                 rightAnswerFeedback: "Correct! You got them all in the right order!",
-                wrongAnswerFeedback: "Incorrect, the correct order is 'Think of Me', 'Phantom of the Opera', 'All I Ask of You', and 'The Point of No Return'.",
+                wrongAnswerFeedback: "Incorrect, the correct order is 'Think of Me', 'Phantom of the Opera', 'The Music of the Night', 'All I Ask of You', and 'The Point of No Return'.",
                 text1: 'Think of Me',
                     id1: "phantom1",
                 text2: 'Phantom of the Opera',
                     id2: "phantom2",
-                text3: 'All I Ask of You',
+                text3: 'The Music of the Night',
                     id3: "phantom3",
-                text4: 'The Point of No Return',
-                    id4: "phantom4"
+                text4: 'All I Ask of You',
+                    id4: "phantom4",
+                text5: 'The Point of No Return',
+                    id5: "phantom5"
                 
             },
             {
                 text: "Sort these songs from 'Rent' so that they're in the correct order!",
                 rightAnswerFeedback: "Correct! You got them all in the right order!",
-                wrongAnswerFeedback: "Incorrect, the correct order is 'Rent', 'Will I?', 'La Vie Boheme', and 'What You Own'.",
-                text1: 'Rent', id1: 'rent1',
-                text2: 'Will I?', id2: 'rent2',
-                text3: 'La Vie Boheme', id3: 'rent3',
-                text4: 'What You Own', id4: 'rent4'
+                wrongAnswerFeedback: "Incorrect, the correct order is 'Rent', 'Light My Candle', 'Will I?', 'La Vie Boheme', and 'What You Own'.",
+                text1: 'Rent',
+                    id1: 'rent1',
+                text2: 'Light My Candle',
+                    id2: 'rent2',
+                text3: 'Will I?',
+                    id3: 'rent3',
+                text4: 'La Vie Boheme',
+                    id4: 'rent4',
+                text5: 'What You Own',
+                    id5: 'rent5'
+            },
+            {
+                text: "Sort these songs from 'Waitress' so that they're in the correct order!",
+                rightAnswerFeedback: "Correct! You got them all in the right order!",
+                wrongAnswerFeedback: "Incorrect, the correct order is 'Opening Up', 'When He Sees Me', 'Bad Idea', 'You Matter to Me', and 'She Used to be Mine'.",
+                text1: 'Opening Up',
+                    id1: 'waitress1',
+                text2: 'When He Sees Me',
+                    id2: 'waitress2',
+                text3: 'Bad Idea',
+                    id3: 'waitress3',
+                text4: 'You Matter to Me',
+                    id4: 'waitress4',
+                text5: 'She Used to be Mine',
+                    id5: 'waitress5'
+            },
+            {
+                text: "Sort these songs from 'Dear Evan Hansen' so that they're in the correct order!",
+                rightAnswerFeedback: "Correct! You got them all in the right order!",
+                wrongAnswerFeedback: "Incorrect, the correct order is 'Anybody Have a Map?', 'Waving Through a Window', 'If I Could Tell Her', 'You Will Be Found', and 'Good For You'.",
+                text1: 'Anybody Have a Map?',
+                    id1: 'deh1',
+                text2: 'Waving Through a Window',
+                    id2: 'deh2',
+                text3: 'If I Could Tell Her',
+                    id3: 'deh3',
+                text4: 'You Will Be Found',
+                    id4: 'deh4',
+                text5: 'Good For You',
+                    id5: 'deh5'
+            },
+            {
+                text: "Sort these songs from 'Spring Awakening' so that they're in the correct order!",
+                rightAnswerFeedback: "Correct! You got them all in the right order!",
+                wrongAnswerFeedback: "Incorrect, the correct order is 'Mama Who Bore Me', 'Touch Me', 'And Then There Were None', 'Left Behind', and 'The Song of Purple Summer'.",
+                text1: 'Mama Who Bore Me',
+                    id1: 'spring1',
+                text2: 'Touch Me',
+                    id2: 'spring2',
+                text3: 'And Then There Were None',
+                    id3: 'spring3',
+                text4: 'Left Behind',
+                    id4: 'spring4',
+                text5: 'The Song of Purple Summer',
+                    id5: 'spring5'
+            },
+            {
+                text: "Sort these songs from 'Fiddler on the Roof' so that they're in the correct order!",
+                rightAnswerFeedback: "Correct! You got them all in the right order!",
+                wrongAnswerFeedback: "Incorrect, the correct order is 'Tradition', 'Matchmaker', 'If I Were a Rich Man', 'Miracle of Miracles', and 'Sunrise, Sunset'.",
+                text1: 'Tradition',
+                    id1: 'fiddler1',
+                text2: 'Matchmaker',
+                    id2: 'fiddler2',
+                text3: 'If I Were a Rich Man',
+                    id3: 'fiddler3',
+                text4: 'Miracle of Miracles',
+                    id4: 'fiddler4',
+                text5: 'Sunrise, Sunset',
+                    id5: 'fiddler5'
+            },
+            {
+                text: "Sort these songs from 'Newsies' so that they're in the correct order!",
+                rightAnswerFeedback: "Correct! You got them all in the right order!",
+                wrongAnswerFeedback: "Incorrect, the correct order is 'Carrying the Banner', 'The World Will Know', 'Watch What Happens', 'Seize the Day', and 'Once and for All'.",
+                text1: 'Carrying the Banner',
+                    id1: 'newsies1',
+                text2: 'The World Will Know',
+                    id2: 'newsies2',
+                text3: 'Watch What Happens',
+                    id3: 'newsies3',
+                text4: 'Seize the Day',
+                    id4: 'newsies4',
+                text5: 'Once and for All',
+                    id5: 'newsies5'
+            },
+            {
+                text: "Sort these songs from 'Cabaret' so that they're in the correct order!",
+                rightAnswerFeedback: "Correct! You got them all in the right order!",
+                wrongAnswerFeedback: "Incorrect, the correct order is 'Willkommen', 'Perfectly Marvelous', 'Money', 'What Would You Do?', and 'Cabaret'.",
+                text1: 'Willkommen',
+                id1: 'cabaret1',
+                text2: 'Perfectly Marvelous',
+                id2: 'cabaret2',
+                text3: 'Money',
+                id3: 'cabaret3',
+                text4: 'What Would You Do?',
+                id4: 'cabaret4',
+                text5: 'Cabaret',
+                id5: 'cabaret5'
+            },
+            {
+                text: "Sort these songs from 'Hamilton' so that they're in the correct order!",
+                rightAnswerFeedback: "Correct! You got them all in the right order!",
+                wrongAnswerFeedback: "Incorrect, the correct order is 'Alexander Hamilton', 'My Shot', 'Ten Duel Commandments', 'The Room Where It Happens', and 'Hurricane'.",
+                text1: 'Alexander Hamilton',
+                    id1: 'hamiltonA1',
+                text2: 'My Shot',
+                    id2: 'hamiltonA2',
+                text3: 'Ten Duel Commandments',
+                    id3: 'hamiltonA3',
+                text4: 'The Room Where It Happens',
+                    id4: 'hamiltonA4',
+                text5: 'Hurricane',
+                    id5: 'hamiltonA5'
+            },
+            {
+                text: "Sort these songs from 'Hamilton' so that they're in the correct order! You thought we'd just have one 'Hamilton' question?",
+                rightAnswerFeedback: "Correct! You got them all in the right order!",
+                wrongAnswerFeedback: "Incorrect, the correct order is 'Helpless', 'That Would Be Enough', 'Take A Break', 'Say No to This', and 'Burn'.",
+                text1: 'Helpless',
+                    id1: 'hamiltonB1',
+                text2: 'That Would Be Enough',
+                    id2: 'hamiltonB2',
+                text3: 'Take A Break',
+                    id3: 'hamiltonB3',
+                text4: 'Say No to This',
+                    id4: 'hamiltonB4',
+                text5: 'Burn',
+                    id5: 'hamiltonB5'
             }
         ]
     };
@@ -118,7 +256,7 @@
                 $('#entireQuiz').show();
             },
 
-            check: function (id1, id2, id3, id4) {
+            check: function (id1, id2, id3, id4, id5) {
                 $('.nextButton').show();
                 $('.checkButton').hide();
 
@@ -127,6 +265,7 @@
                 var element2 = document.getElementById(id2);
                 var element3 = document.getElementById(id3);
                 var element4 = document.getElementById(id4);
+                var element5 = document.getElementById(id5);
 
                 //these if statements check whether the songs ended up in their correct div locations
                 if ($(element1).parents("#div1").length == 1) {
@@ -141,9 +280,12 @@
                 if ($(element4).parents("#div4").length == 1) {
                     this.correctAnswers++;
                 }
+                if ($(element5).parents("#div5").length == 1) {
+                    this.correctAnswers++;
+                }
 
                 //if all four are correct, the right response is shown, otherwise wrong response is shown
-                if (this.correctAnswers == 4) {
+                if (this.correctAnswers == 5) {
                     $('.rightResponse').show();
                     this.questionsCorrect++;
                 }
