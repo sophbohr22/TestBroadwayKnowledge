@@ -39,17 +39,14 @@
 
                                 </div>
                             </div>
-                            <div class="row">
-                                <button class="checkButton btn btn-teal btn-check-size" v-on:click="check">Check!</button>
-                            </div>
                         </div>
 
                         <div class="col-md-4">
                             <div id="start" ondrop="drop(event, this)" ondragover="allowDrop(event)">
-                                <button draggable="true" ondragstart="drag(event)" id="option1" class="btn btn-sort-option" width="88" height="31"> {{ question.text1 }} </button>
-                                <button draggable="true" ondragstart="drag(event)" id="option2" class="btn btn-sort-option" width="88" height="31"> {{ question.text2 }} </button>
-                                <button draggable="true" ondragstart="drag(event)" id="option3" class="btn btn-sort-option" width="88" height="31"> {{ question.text3 }} </button>
-                                <button draggable="true" ondragstart="drag(event)" id="option4" class="btn btn-sort-option" width="88" height="31"> {{ question.text4 }} </button>
+                                <button draggable="true" ondragstart="drag(event)" v-bind:id="question.id1" class="btn btn-sort-option" width="88" height="31"> {{ question.text1 }} </button>
+                                <button draggable="true" ondragstart="drag(event)" v-bind:id="question.id2" class="btn btn-sort-option" width="88" height="31"> {{ question.text2 }} </button>
+                                <button draggable="true" ondragstart="drag(event)" v-bind:id="question.id3" class="btn btn-sort-option" width="88" height="31"> {{ question.text3 }} </button>
+                                <button draggable="true" ondragstart="drag(event)" v-bind:id="question.id4" class="btn btn-sort-option" width="88" height="31"> {{ question.text4 }} </button>
                             </div>
                         </div>
 
@@ -59,8 +56,11 @@
                         </div>
 
                     </div>
-                    
-                    <div>
+                    <div class="row">
+                        <button class="checkButton btn btn-teal btn-check-size" v-on:click="check(question.id1, question.id2, question.id3, question.id4)">Check!</button>
+                    </div>
+
+                    <div class="row">
                         <button class="nextButton btn btn-teal btn-sm-size" v-on:click="next(index)">next</button>
                     </div>
 
@@ -81,19 +81,23 @@
                 rightAnswerFeedback: "Correct! You got them all in the right order!",
                 wrongAnswerFeedback: "Incorrect, the correct order is 'Think of Me', 'Phantom of the Opera', 'All I Ask of You', and 'The Point of No Return'.",
                 text1: 'Think of Me',
+                    id1: "phantom1",
                 text2: 'Phantom of the Opera',
+                    id2: "phantom2",
                 text3: 'All I Ask of You',
-                text4: 'The Point of No Return'
+                    id3: "phantom3",
+                text4: 'The Point of No Return',
+                    id4: "phantom4"
                 
             },
             {
                 text: "Sort these songs from 'Rent' so that they're in the correct order!",
                 rightAnswerFeedback: "Correct! You got them all in the right order!",
                 wrongAnswerFeedback: "Incorrect, the correct order is 'Rent', 'Will I?', 'La Vie Boheme', and 'What You Own'.",
-                text1: 'Rent',
-                text2: 'Will I?',
-                text3: 'La Vie Boheme',
-                text4: 'What You Own'
+                text1: 'Rent', id1: 'rent1',
+                text2: 'Will I?', id2: 'rent2',
+                text3: 'La Vie Boheme', id3: 'rent3',
+                text4: 'What You Own', id4: 'rent4'
             }
         ]
     };
@@ -105,6 +109,7 @@
             quiz: quiz,
             correctAnswers: 0,
             questionIndex: 0,
+            questionsCorrect: 0,
         },
 
         methods: {
@@ -117,30 +122,40 @@
                 $('#entireQuiz').show();
             },
 
-            check: function () {
+            check: function (id1, id2, id3, id4) {
                 $('.nextButton').show();
                 $('.checkButton').hide();
 
-                if ($("#option1").parents("#div1").length == 1) {
+                //gets all of the elements by the passed ids to later reference for correct location
+                var element1 = document.getElementById(id1); 
+                var element2 = document.getElementById(id2);
+                var element3 = document.getElementById(id3);
+                var element4 = document.getElementById(id4);
+
+                //these if statements check whether the songs ended up in their correct div locations
+                if ($(element1).parents("#div1").length == 1) {
                     this.correctAnswers++;
                 }
-                if ($("#option2").parents("#div2").length == 1) {
+                if ($(element2).parents("#div2").length == 1) {
                     this.correctAnswers++;
                 }
-                if ($("#option3").parents("#div3").length == 1) {
+                if ($(element3).parents("#div3").length == 1) {
                     this.correctAnswers++;
                 }
-                if ($("#option4").parents("#div4").length == 1) {
+                if ($(element4).parents("#div4").length == 1) {
                     this.correctAnswers++;
                 }
 
+                //if all four are correct, the right response is shown, otherwise wrong response is shown
                 if (this.correctAnswers == 4) {
                     $('.rightResponse').show();
+                    this.questionsCorrect++;
                 }
                 else {
                     $('.wrongResponse').show();
                 }
 
+                //all song options are disabled so that the user can't drag them anymore
                 var x = document.getElementsByClassName("btn-sort-option");
                 var i;
                 for (i = 0; i < x.length; i++) {
@@ -151,10 +166,12 @@
             },
 
             next: function (index) {
-                $('checkButton').show();
+                $('.checkButton').show();
                 $('.nextButton').hide();
                 $('.rightResponse').hide();
                 $('.wrongResponse').hide();
+
+                this.correctAnswers = 0;
                 
 
                 this.questionIndex++;
@@ -174,16 +191,16 @@
 </script>
 <script>
     function allowDrop(ev) {
-        ev.preventDefault();
+        ev.preventDefault(); //prevents default setting of not allowing elements to be dropped into other elements
     }
 
     function drag(ev) {
-        ev.dataTransfer.setData("text", ev.target.id);
+        ev.dataTransfer.setData('button', ev.target.id); //sets data type and value of dragged data
     }
 
     function drop(ev, el) {
-        ev.preventDefault();
-        var data = ev.dataTransfer.getData("text");
-        el.appendChild(document.getElementById(data));
+        ev.preventDefault(); //prevents default setting of not allowing elements to be dropped into other elements
+        var data = ev.dataTransfer.getData('button'); //gets the dragged data and sets it to data
+        el.appendChild(document.getElementById(data)); //puts the dragged element inside the box area
     }
 </script>
