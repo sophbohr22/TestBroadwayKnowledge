@@ -6,6 +6,7 @@
     <div class="row">
         <div class="col-md-12">
             <h1>{{ quiz.title }}</h1>
+            <p class="note"><b>Note: This section currently does not function for mobile devices.</b></p>
             <button class="startButton btn btn-teal btn-md-size" v-on:click="startQuiz">Start Quiz!</button>
         </div>
     </div>
@@ -73,6 +74,18 @@
                     </div>
                 </div>
             </div>
+            <div v-show="questionIndex === quiz.questions.length">
+                <button class="seeResults btn btn-teal btn-md-size" v-on:click="displayResults(quiz.questions.length)">See my results!</button>
+
+                <div class="results">
+                    <h1>Ranking: {{ finalRanking }} </h1>
+                    <h2>You earned a score of {{ finalScore }}%!</h2>
+                    <p> {{ finalScoreFeedback }} </p>
+
+                    <a class="btn btn-teal btn-md-size" asp-area="" asp-controller="Home" asp-action="Index">Back to Home</a>
+                </div>
+            </div>
+        </div>
         </div>
     </div>
 </div>
@@ -245,6 +258,10 @@
             correctAnswers: 0, //totals if all four songs are sorted correctly each time, and then is reset to 0
             questionIndex: 0, //keeps track of which song index we are at
             questionsCorrect: 0, //totals how many questions the user sorts perfectly
+
+            finalScore: 0,
+            finalScoreFeedback: "",
+            finalRanking: "",
         },
 
         methods: {
@@ -253,6 +270,8 @@
                 $('.startButton').hide();
                 $('.rightResponse').hide();
                 $('.wrongResponse').hide();
+                $('.note').hide();
+                $('.results').hide();
 
                 $('#entireQuiz').show();
             },
@@ -324,7 +343,36 @@
             },
 
             displayResults: function (totalQuestions) {
+                this.finalScore = (this.questionsCorrect / totalQuestions) * 100;
+                var score = this.questionsCorrect;
 
+                if (score == 0 || score == 1 || score == 2) {
+                    this.finalScoreFeedback = "Oh no, it seems you didn't know too much about the order of these Broadway songs! You've earned a ranking of 'Starving Lyricist'. You're probably too busy trying to write your own songs, maybe you'll get a hit one of these days!";
+                    this.finalRanking = "Starving Lyricist";
+                }
+                else if (score == 3 || score == 4 || score == 5) {
+                    this.finalScoreFeedback = "Not bad, but not great! You've earned a ranking of 'Playbill Data Enterer'. You don't write the songs, but you type the name of them into all the playbills! Maybe someday your name will be inside one too!";
+                    this.finalRanking = "Playbill Data Enterer";
+                }
+                else if (score == 6 || score == 7) {
+                    this.finalScoreFeedback = "You knew quite a few of these Broadway song orders! You've earned a ranking of 'Professional Lyricist'. Without you, these songs wouldn't have the create words that give them meaning. Way to go!";
+                    this.finalRanking = "Professional Lyricist";
+                }
+                else if (score == 8) {
+                    this.finalScoreFeedback = "Wow you really know the order of these Broadway songs! You've earned a ranking of 'Conductor'. As a conductor you have to know when each song comes in the musical to keep everyone on track. There'd be no show without you!";
+                    this.finalRanking = "Conductor";
+                }
+                else if (score == 9) {
+                    this.finalScoreFeedback = "You're a Broadway song expert! You knew the order of almost all these Broadway songs! You've earned a ranking of 'Sound Designer'. Without your expertise, the audience wouldn't be able to hear these beautiful songs! Fantastic work!";
+                    this.finalRanking = "Sound Designer";
+                }
+                else if (score == 10) {
+                    this.finalScoreFeedback = "Wow! You knew the order of the songs for every single Broadway musical in this quiz! Excellent work! You've earned a ranking of 'Composer'. You pen emotional and impactful scores for Broadway musicals, and who knows you might even go home with a Tony one of these years!";
+                    this.finalRanking = "Composer";
+                }
+
+                $('.seeResults').hide();
+                $('.results').show();
             }
         }
     });
