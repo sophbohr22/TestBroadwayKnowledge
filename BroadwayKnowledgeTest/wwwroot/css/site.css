@@ -87,7 +87,7 @@ input[type="radio"] {
 
 .btn-lg-size {
     font-size: large;
-    width: 20em;
+    width: 22em;
     margin: 1em;
     padding: 1em;
 }
@@ -166,4 +166,17 @@ ul {
     padding: 1em;
     border: 0.1em solid #2B7A78;
     text-align: center;
+}
+
+footer {
+    text-align: center;
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (-webkit-min-device-pixel-ratio: 2) {
+    .btn-lg-size {
+        font-size: medium;
+        width: 18em;
+        margin: 1em;
+        padding: 1em;
+    }
 }
