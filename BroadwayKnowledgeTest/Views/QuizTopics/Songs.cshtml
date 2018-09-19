@@ -11,7 +11,7 @@
         </div>
     </div>
     <div class="row" id="entireQuiz" v-show="false">
-        <div class="col-md-12">
+        <div class="col-sm-12">
             <div v-for="(question, index) in quiz.questions">
                 <div v-show="index === questionIndex">
                     <h2>{{ question.text }}</h2>
@@ -50,7 +50,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="col-md-4">
                             <div id="start" ondrop="drop(event, this)" ondragover="allowDrop(event)">
                                 <button draggable="true" ondragstart="drag(event)" v-bind:id="question.id2" class="btn btn-sort-option" width="88" height="31"> {{ question.text2 }} </button>
@@ -61,11 +60,28 @@
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <!--where the pictures will go-->
+                            <img src="~/playbills/cover-phantom.jpg" class="songs_cover pic_cover-phantom" />
+                            <img src="~/playbills/inside-phantom.jpg" class="songs_inside pic_inside-phantom" />
+                            <img src="~/playbills/cover-rent.jpg" class="songs_cover pic_cover-rent" />
+                            <img src="~/playbills/inside-rent.jpg" class="songs_inside pic_inside-rent" />
+                            <img src="~/playbills/cover-waitress.jpg" class="songs_cover pic_cover-waitress" />
+                            <img src="~/playbills/inside-waitress.jpg" class="songs_inside pic_inside-waitress" />
+                            <img src="~/playbills/cover-deh.jpg" class="songs_cover pic_cover-deh" />
+                            <img src="~/playbills/inside-deh.jpg" class="songs_inside pic_inside-deh" />
+                            <img src="~/playbills/cover-spring.jpg" class="songs_cover pic_cover-spring" />
+                            <img src="~/playbills/inside-spring.jpg" class="songs_inside pic_inside-spring" />
+                            <img src="~/playbills/cover-fiddler.jpg" class="songs_cover pic_cover-fiddler" />
+                            <img src="~/playbills/inside-fiddler.jpg" class="songs_inside pic_inside-fiddler" />
+                            <img src="~/playbills/cover-heights.jpg" class="songs_cover pic_cover-heights" />
+                            <img src="~/playbills/inside-heights.jpg" class="songs_inside pic_inside-heights" />
+                            <img src="~/playbills/cover-cabaret.jpg" class="songs_cover pic_cover-cabaret" />
+                            <img src="~/playbills/inside-cabaret.jpg" class="songs_inside pic_inside-cabaret" />
+                            <img src="~/playbills/cover-hamilton.jpg" class="songs_cover pic_cover-hamilton" />
+                            <img src="~/playbills/inside-hamilton.jpg" class="songs_inside pic_inside-hamilton" />
                         </div>
                     </div>
                     <div class="row">
-                        <button class="checkButton btn btn-teal margin-left-space" v-on:click="check(question.id1, question.id2, question.id3, question.id4, question.id5)">Check!</button>
+                        <button class="checkButton btn btn-teal margin-left-space" v-on:click="check(question.id1, question.id2, question.id3, question.id4, question.id5, index)">Check!</button>
 
                         <p class="rightResponse margin-left-space"> {{ question.rightAnswerFeedback }} </p>
                         <p class="wrongResponse margin-left-space"> {{ question.wrongAnswerFeedback }} </p>
@@ -74,18 +90,24 @@
                     </div>
                 </div>
             </div>
-            <div v-show="questionIndex === quiz.questions.length">
-                <button class="seeResults btn btn-teal btn-md-size" v-on:click="displayResults(quiz.questions.length)">See my results!</button>
+            <div class="row" v-show="questionIndex === quiz.questions.length">
+                <div class="col-md-6">
+                    <button class="seeResults btn btn-teal btn-md-size" v-on:click="displayResults(quiz.questions.length)">See my results!</button>
 
-                <div class="results">
-                    <h1>Ranking: {{ finalRanking }} </h1>
-                    <h2>You earned a score of {{ finalScore }}%!</h2>
-                    <p> {{ finalScoreFeedback }} </p>
+                    <div class="results">
+                        <h1>Ranking: {{ finalRanking }} </h1>
+                        <h2>You earned a score of {{ finalScore }}%!</h2>
+                        <p> {{ finalScoreFeedback }} </p>
 
-                    <a class="btn btn-teal btn-md-size" asp-area="" asp-controller="Home" asp-action="Index">Back to Home</a>
+                        <p>All photos of playbills are from <a target="_blank" href="http://www.playbill.com/vault">Playbill Vault</a>, which is a great resource for Broadway history and is the largest Broadway online database! Check it out!</p>
+
+                        <a class="btn btn-teal btn-md-size" asp-area="" asp-controller="Home" asp-action="Index">Back to Home</a>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <img src="~/FinalPhoto.jpg" class="theatres_pic pic_finalphoto" />
                 </div>
             </div>
-        </div>
         </div>
     </div>
 </div>
@@ -188,19 +210,19 @@
                     id5: 'fiddler5'
             },
             {
-                text: "Sort these songs from 'Newsies' so that they're in the correct order!",
+                text: "Sort these songs from 'In the Heights' so that they're in the correct order!",
                 rightAnswerFeedback: "Correct! You got them all in the right order!",
-                wrongAnswerFeedback: "Incorrect, the correct order is 'Carrying the Banner', 'The World Will Know', 'Watch What Happens', 'Seize the Day', and 'Once and for All'.",
-                text1: 'Carrying the Banner',
-                    id1: 'newsies1',
-                text2: 'The World Will Know',
-                    id2: 'newsies2',
-                text3: 'Watch What Happens',
-                    id3: 'newsies3',
-                text4: 'Seize the Day',
-                    id4: 'newsies4',
-                text5: 'Once and for All',
-                    id5: 'newsies5'
+                wrongAnswerFeedback: "Incorrect, the correct order is 'In the Heights', 'Breathe', 'Inutil', 'No Me Diga', and 'Champagne'.",
+                text1: 'In the Heights',
+                    id1: 'heights1',
+                text2: 'Breathe',
+                    id2: 'heights2',
+                text3: 'Inutil',
+                    id3: 'heights3',
+                text4: 'No Me Diga',
+                    id4: 'heights4',
+                text5: 'Champagne',
+                    id5: 'heights5'
             },
             {
                 text: "Sort these songs from 'Cabaret' so that they're in the correct order!",
@@ -273,10 +295,30 @@
                 $('.note').hide();
                 $('.results').hide();
 
+                $('.pic_inside-phantom').hide();
+                $('.pic_cover-rent').hide();
+                $('.pic_inside-rent').hide();
+                $('.pic_cover-waitress').hide();
+                $('.pic_inside-waitress').hide();
+                $('.pic_cover-deh').hide();
+                $('.pic_inside-deh').hide();
+                $('.pic_cover-spring').hide();
+                $('.pic_inside-spring').hide();
+                $('.pic_cover-fiddler').hide();
+                $('.pic_inside-fiddler').hide();
+                $('.pic_cover-heights').hide();
+                $('.pic_inside-heights').hide();
+                $('.pic_cover-cabaret').hide();
+                $('.pic_inside-cabaret').hide();
+                $('.pic_cover-hamilton').hide();
+                $('.pic_inside-hamilton').hide();
+
+                $('.pic_finalphoto').hide();
+
                 $('#entireQuiz').show();
             },
 
-            check: function (id1, id2, id3, id4, id5) {
+            check: function (id1, id2, id3, id4, id5, index) {
                 $('.nextButton').show();
                 $('.checkButton').hide();
 
@@ -322,6 +364,48 @@
                 }
 
                 //decides which picture is shown
+                switch (index) {
+                    case 0:
+                        $('.pic_cover-phantom').hide();
+                        $('.pic_inside-phantom').show();
+                        break;
+                    case 1:
+                        $('.pic_cover-rent').hide();
+                        $('.pic_inside-rent').show();
+                        break;
+                    case 2:
+                        $('.pic_cover-waitress').hide();
+                        $('.pic_inside-waitress').show();
+                        break;
+                    case 3:
+                        $('.pic_cover-deh').hide();
+                        $('.pic_inside-deh').show();
+                        break;
+                    case 4:
+                        $('.pic_cover-spring').hide();
+                        $('.pic_inside-spring').show();
+                        break;
+                    case 5:
+                        $('.pic_cover-fiddler').hide();
+                        $('.pic_inside-fiddler').show();
+                        break;
+                    case 6:
+                        $('.pic_cover-heights').hide();
+                        $('.pic_inside-heights').show();
+                        break;
+                    case 7:
+                        $('.pic_cover-cabaret').hide();
+                        $('.pic_inside-cabaret').show();
+                        break;
+                    case 8:
+                        $('.pic_cover-hamilton').hide();
+                        $('.pic_inside-hamilton').show();
+                        break;
+                    case 9:
+                        $('.pic_cover-hamilton').hide();
+                        $('.pic_inside-hamilton').show();
+                        break;
+                }
             },
 
             next: function (index) {
@@ -340,6 +424,46 @@
                 for (i = 0; i < x.length; i++) {
                     x[i].disabled = false;
                 }
+
+                //decides which picture is shown
+                switch (index) {
+                    case 0:
+                        $('.pic_inside-phantom').hide();
+                        $('.pic_cover-rent').show();
+                        break;
+                    case 1:
+                        $('.pic_inside-rent').hide();
+                        $('.pic_cover-waitress').show();
+                        break;
+                    case 2:
+                        $('.pic_inside-waitress').hide();
+                        $('.pic_cover-deh').show();
+                        break;
+                    case 3:
+                        $('.pic_inside-deh').hide();
+                        $('.pic_cover-spring').show();
+                        break;
+                    case 4:
+                        $('.pic_inside-spring').hide();
+                        $('.pic_cover-fiddler').show();
+                        break;
+                    case 5:
+                        $('.pic_inside-fiddler').hide();
+                        $('.pic_cover-heights').show();
+                        break;
+                    case 6:
+                        $('.pic_inside-heights').hide();
+                        $('.pic_cover-cabaret').show();
+                        break;
+                    case 7:
+                        $('.pic_inside-cabaret').hide();
+                        $('.pic_cover-hamilton').show();
+                        break;
+                    case 8:
+                        $('.pic_inside-hamilton').hide();
+                        $('.pic_cover-hamilton').show();
+                        break;
+                }
             },
 
             displayResults: function (totalQuestions) {
@@ -355,7 +479,7 @@
                     this.finalRanking = "Playbill Data Enterer";
                 }
                 else if (score == 6 || score == 7) {
-                    this.finalScoreFeedback = "You knew quite a few of these Broadway song orders! You've earned a ranking of 'Professional Lyricist'. Without you, these songs wouldn't have the create words that give them meaning. Way to go!";
+                    this.finalScoreFeedback = "You knew quite a few of these Broadway song orders! You've earned a ranking of 'Professional Lyricist'. Without you, these songs wouldn't have the creative words that give them meaning. Way to go!";
                     this.finalRanking = "Professional Lyricist";
                 }
                 else if (score == 8) {
@@ -372,6 +496,7 @@
                 }
 
                 $('.seeResults').hide();
+                $('.pic_finalphoto').show();
                 $('.results').show();
             }
         }
