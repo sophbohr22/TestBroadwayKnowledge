@@ -46,8 +46,9 @@ p {
     color: #17252A;
 }
 
-.row-options {
-    align-content: center;
+.col-options {
+    align-content: center !important;
+    text-align: center !important;
 }
 
 input[type="radio"] {
@@ -72,9 +73,21 @@ input[type="radio"] {
     border-color: #DEF2F1;
 }
 
+.btn-sort-option {
+    color: #3AAFA9;
+    background-color: #DEF2F1;
+    border-color: #3AAFA9;
+}
+
+.btn-sort-option:hover {
+    color: #3AAFA9;
+    background-color: #DEF2F1;
+    border-color: #3AAFA9;
+}
+
 .btn-lg-size {
     font-size: large;
-    width: 24em;
+    width: 22em;
     margin: 1em;
     padding: 1em;
 }
@@ -85,6 +98,10 @@ input[type="radio"] {
 
 .btn-sm-size {
     width: 6em;
+}
+
+.checkButton {
+    width: 18em;
 }
 
 .radioButtons {
@@ -119,4 +136,58 @@ nav {
 
 .navbar-inverse .navbar-nav > li > a:hover {
     color: #3AAFA9;
+}
+
+.margin-left-space {
+    margin-left: 1em;
+}
+
+ul {
+    margin-bottom: 2em;
+}
+
+#div1, #div2, #div3, #div4, #div5 {
+    float: left;
+    width: 18em;
+    height: 5em;
+    margin-left: 1em;
+    margin-bottom: 0.8em;
+    padding: 1em;
+    border: 0.1em solid #2B7A78;
+    text-align: center;
+}
+
+#start {
+    float: left;
+    width: 18em;
+    height: 23em;
+    margin-left: 1em;
+    margin-bottom: 1em;
+    padding: 1em;
+    border: 0.1em solid #2B7A78;
+    text-align: center;
+}
+
+footer {
+    text-align: center;
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (-webkit-min-device-pixel-ratio: 2) {
+    .btn-lg-size {
+        font-size: medium;
+        width: 18em;
+        margin: 1em;
+        padding: 1em;
+    }
+}
+
+/**
+.songs_cover {
+    height: 29em;
+    width: auto;
+}
+*/
+
+.theatres_pic {
+
 }
