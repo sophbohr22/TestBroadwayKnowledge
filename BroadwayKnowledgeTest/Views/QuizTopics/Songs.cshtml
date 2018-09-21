@@ -277,9 +277,11 @@
 
         data: {
             quiz: quiz,
-            correctAnswers: 0, //totals if all four songs are sorted correctly each time, and then is reset to 0
+           // correctAnswers: 0, //totals if all four songs are sorted correctly each time, and then is reset to 0
             questionIndex: 0, //keeps track of which song index we are at
             questionsCorrect: 0, //totals how many questions the user sorts perfectly
+            correctFlag: true,
+
 
             finalScore: 0,
             finalScoreFeedback: "",
@@ -331,24 +333,44 @@
 
                 //these if statements check whether the songs ended up in their correct div locations
                 //if the div parents the element, the length is 1, so then correct answers is incremented
-                if ($(element1).parents("#div1").length == 1) {
-                    this.correctAnswers++;
+                if (!($(element1).parents("#div1").length == 1)) {
+                    this.correctFlag = false;
+                    document.getElementById("div1").style.backgroundColor = "#ff3333";
                 }
-                if ($(element2).parents("#div2").length == 1) {
-                    this.correctAnswers++;
+                else {
+                    document.getElementById("div1").style.backgroundColor = "#5dd55d";
                 }
-                if ($(element3).parents("#div3").length == 1) {
-                    this.correctAnswers++;
+                if (!($(element2).parents("#div2").length == 1)) {
+                    this.correctFlag = false;
+                    document.getElementById("div2").style.backgroundColor = "#ff3333";
                 }
-                if ($(element4).parents("#div4").length == 1) {
-                    this.correctAnswers++;
+                else {
+                    document.getElementById("div2").style.backgroundColor = "#5dd55d";
                 }
-                if ($(element5).parents("#div5").length == 1) {
-                    this.correctAnswers++;
+                if (!($(element3).parents("#div3").length == 1)) {
+                    this.correctFlag = false;
+                    document.getElementById("div3").style.backgroundColor = "#ff3333";
+                }
+                else {
+                    document.getElementById("div3").style.backgroundColor = "#5dd55d";
+                }
+                if (!($(element4).parents("#div4").length == 1)) {
+                    this.correctFlag = false;
+                    document.getElementById("div4").style.backgroundColor = "#ff3333";
+                }
+                else {
+                    document.getElementById("div4").style.backgroundColor = "#5dd55d";
+                }
+                if (!($(element5).parents("#div5").length == 1)) {
+                    this.correctFlag = false;
+                    document.getElementById("div5").style.backgroundColor = "#ff3333";
+                }
+                else {
+                    document.getElementById("div5").style.backgroundColor = "#5dd55d";
                 }
 
                 //if all five are correct, the right response is shown, otherwise wrong response is shown
-                if (this.correctAnswers == 5) {
+                if (this.correctFlag == true) {
                     $('.rightResponse').show();
                     this.questionsCorrect++;
                 }
@@ -414,8 +436,13 @@
                 $('.rightResponse').hide();
                 $('.wrongResponse').hide();
 
-                this.correctAnswers = 0;
-                
+                this.correctFlag = true;
+
+//                document.getElementById("div1").style.backgroundColor = "white";
+//                document.getElementById("div2").style.backgroundColor = "white";
+//               document.getElementById("div3").style.backgroundColor = "white";
+//                document.getElementById("div4").style.backgroundColor = "white";
+//                document.getElementById("div5").style.backgroundColor = "white";
 
                 this.questionIndex++;
 
